@@ -4,7 +4,7 @@ import se.mah.k3lara.Settings;
 
 public class Game {
 	private static Game instance;
-	private static State[][] gameBoard;
+	private static ItemState[][] gameBoard;
 	private GameUpdateInterface gameUpdateInterface;
 	private Game(){
 		
@@ -13,13 +13,13 @@ public class Game {
 	public static Game getInstance(){
 		if (instance==null){
 			instance = new Game();
-			gameBoard = new State[Settings.nbrRowsColumns][Settings.nbrRowsColumns];
+			gameBoard = new ItemState[Settings.nbrRowsColumns][Settings.nbrRowsColumns];
 			clearGameBoard();
 		}
 		return instance;
 	}
 	
-	public boolean setState(int row,int column, State state){
+	public boolean setState(int row,int column, ItemState state){
 		if (Settings.isColumnOrRowValueLegal(row)&&Settings.isColumnOrRowValueLegal(column)){
 			gameBoard[row][column] = state;
 			gameUpdateInterface.setGamePiece(row, column, state);
@@ -29,7 +29,7 @@ public class Game {
 		}
 	}
 	
-	public State getState(int row, int column){
+	public ItemState getState(int row, int column){
 		if (Settings.isColumnOrRowValueLegal(row)&&Settings.isColumnOrRowValueLegal(column)){
 			return gameBoard[row][column];
 		}else{
@@ -40,11 +40,11 @@ public class Game {
 	private static void clearGameBoard(){
 		for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-				gameBoard[i][j]=State.EMPTY;
+				gameBoard[i][j]=ItemState.EMPTY;
 			}
 		}
 	}
-	public State[][] getGameStateClone(){
+	public ItemState[][] getGameStateClone(){
 		return gameBoard.clone();
 	}
 

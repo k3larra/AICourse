@@ -19,12 +19,12 @@ import se.mah.k3lara.Settings;
 import se.mah.k3lara.control.Controller;
 import se.mah.k3lara.control.OutputLevel;
 import se.mah.k3lara.model.Game;
-import se.mah.k3lara.model.State;
+import se.mah.k3lara.model.ItemState;
 import se.mah.k3lara.model.tryit;
 
 public class Piece implements ActionListener, MouseListener{
 	private GameBoard gameBoard;
-	private State state = State.EMPTY;
+	private ItemState state = ItemState.EMPTY;
 	private JButton jButton;
 	private int row;
 	private int column;
@@ -38,12 +38,12 @@ public class Piece implements ActionListener, MouseListener{
 		this.jButton.setBackground(new Color(71,130,12));
 		this.row = row;
 		this.column = column;
-		Game.getInstance().setState(row, column, State.EMPTY);
+		Game.getInstance().setState(row, column, ItemState.EMPTY);
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		 //gameBoard.printInfo("Clicked row:"+row+" column: "+column);
-		if(this.state==State.EMPTY){
+		if(this.state==ItemState.EMPTY){
 		 Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
 		}
 	}
@@ -75,22 +75,22 @@ public class Piece implements ActionListener, MouseListener{
 	
 	public void setBlack(){
 		//Image not centered!!!!!
-			this.jButton.setIcon(getImage(State.BLACK));
-			state= State.BLACK;
+			this.jButton.setIcon(getImage(ItemState.BLACK));
+			state= ItemState.BLACK;
 	}
 	
 	public void setWhite(){
 		//Image not centered!!!!!
-		this.jButton.setIcon(getImage(State.WHITE));
-		state= State.WHITE;
+		this.jButton.setIcon(getImage(ItemState.WHITE));
+		state= ItemState.WHITE;
 	}
 	public void setEmpty(){
 		//Image not centered!!!!!
-		this.jButton.setIcon(getImage(State.EMPTY));
-		state= State.EMPTY;
+		this.jButton.setIcon(getImage(ItemState.EMPTY));
+		state= ItemState.EMPTY;
 	}
 	
-	private ImageIcon getImage(State state){
+	private ImageIcon getImage(ItemState state){
 		 BufferedImage bI = null;
 		 Image i2 = null;
 		 ImageIcon ia = null;

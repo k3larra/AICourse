@@ -13,14 +13,14 @@ import se.mah.k3lara.control.Controller;
 import se.mah.k3lara.control.OutputLevel;
 import se.mah.k3lara.model.Game;
 import se.mah.k3lara.model.GameUpdateInterface;
-import se.mah.k3lara.model.State;
+import se.mah.k3lara.model.ItemState;
 
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-
+import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 
 
@@ -105,14 +105,18 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 	}
 
 
-	public void printInfo(String text) {
-		System.out.println("Hoj");
-		  outputArea.append(" > "+text+"\n");
-		
+	public void printInfo(final String text) {
+		  SwingUtilities.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	outputArea.append(" > "+text+"\n");
+			    	outputArea.setCaretPosition(outputArea.getDocument().getLength());
+			    }
+			});
 	}
 
 	@Override
-	public void setGamePiece(int row, int column, State state) {
+	public void setGamePiece(int row, int column, ItemState state) {
 		switch (state) {
 		case BLACK:
 			gameBoardUI[row][column].setBlack();
