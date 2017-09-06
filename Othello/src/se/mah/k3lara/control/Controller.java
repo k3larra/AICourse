@@ -7,6 +7,7 @@ import se.mah.k3lara.model.GameUpdateInterface;
 import se.mah.k3lara.model.ItemState;
 
 public class Controller {
+	//0= EMPTY, 1=WHITE 2=BLACK
 	private static Controller instance;
 	private static ItemState lastPlayer;
 	private GameUpdateInterface gameUpdateInteface;
@@ -30,14 +31,14 @@ public class Controller {
 		if (player == Settings.computerPlayerMax){
 			pretendToThink = false;
 		}
-		if(!pretendToThink){
+		if(!pretendToThink){  //Wating for Agent thinking to complete
 			if (player == Settings.humanPlayerMin){
 				Game.getInstance().setState(row, column, Settings.humanPlayerMin);
 				//Ok start thinkingOOOO
 				thinkThread = new ThinkThread();
 				thinkThread.start();
 				pretendToThink = true;
-			}else if(player == Settings.computerPlayerMax){
+			}else if(player == Settings.computerPlayerMax){  //Computer player
 				Game.getInstance().setState(row, column, Settings.computerPlayerMax);
 			}
 			switchToNextPlayerTurn();
@@ -72,20 +73,20 @@ public class Controller {
 		}
 	}
 	
-	public void printGameState (ItemState[][] state){
+	public void printGameState (int[][] stateAsInt){
 		String s="";
-		printInfo("********");
+		printInfo("****Begin Current gamestate****");
 		for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			s="";
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-			switch (state[i][j]) {
-				case BLACK:
+			switch (stateAsInt[i][j]) {
+				case 2:
 					s=s+" B ";
 					break;
-				case WHITE:
+				case 1:
 					s=s+" W ";
 					break;
-				case EMPTY:
+				case 0:
 					s=s+" 0 ";
 					break;
 				default:
@@ -94,8 +95,8 @@ public class Controller {
 				}
 			}
 			printInfo(s);
+			
 		}
-		
-
+		printInfo("****End Current gamestate****");
 	}
 }

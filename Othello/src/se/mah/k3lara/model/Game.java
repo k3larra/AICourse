@@ -44,8 +44,29 @@ public class Game {
 			}
 		}
 	}
-	public ItemState[][] getGameStateClone(){
-		return gameBoard.clone();
+	
+	//Return as int array...... for speed
+	public int[][] getGameStateClone(){
+		int[][]  stateIntClone = new int[Settings.nbrRowsColumns][Settings.nbrRowsColumns];
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+					switch (gameBoard[i][j]) {
+					case EMPTY:
+						stateIntClone[i][j]=0;
+						break;
+					case WHITE:
+						stateIntClone[i][j]=1;
+					break;
+					case BLACK:
+						stateIntClone[i][j]=2;
+					break;
+					default:
+						stateIntClone[i][j]=0;
+					break;
+				}
+			}
+		}
+		return stateIntClone;
 	}
 
 	public void setGameRef(GameUpdateInterface gameUpdateInterface) {
