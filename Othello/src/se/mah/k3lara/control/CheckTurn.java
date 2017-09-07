@@ -1,0 +1,61 @@
+package se.mah.k3lara.control;
+
+import se.mah.k3lara.Helpers;
+import se.mah.k3lara.Settings;
+import se.mah.k3lara.model.ItemState;
+
+public class CheckTurn{
+	  private int[][] gameStateInt;
+	  private boolean turn = false;
+	  private boolean legalMove=false;
+	  public CheckTurn(int[][] gameStateInt, boolean turn,int row, int column, ItemState itemStateCurrentPlayer){
+		  this.gameStateInt = gameStateInt;
+		  this.turn = turn;
+		  checkOrTurnCenter(row, column, itemStateCurrentPlayer);
+	  }
+	
+	public int[][] getGameStateInt() {
+		return this.gameStateInt;
+	}
+
+	public boolean wasItALegalMove(){
+	  return this.legalMove;
+	}
+	
+	private void checkOrTurnCenter(int row,int column, ItemState itemStateCurrentPlayer){
+		//east
+/*		System.out.println("#####BEFORE checoOrTurn");
+
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			String s ="";
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+				s=s+gameStateInt[i][j];
+			}
+			System.out.println(s);
+		}
+		System.out.println("#####B");*/
+		 checkOrTurn(row,column+1,itemStateCurrentPlayer, 0);
+	}
+	
+	private boolean checkOrTurn(int row,int column, ItemState itemStateCurrentPlayer, int direction) {
+		  //have we reached the edge of the board?
+		  if(column==Settings.nbrRowsColumns){ //East
+			  return false; //Get the hell out
+		  }
+		  if (gameStateInt[row][column]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){ //Still another color
+			  if(checkOrTurn(row,column+1, itemStateCurrentPlayer, 0)){ //continue check next
+				  if(turn){//shall we turn this when we come back?
+					 gameStateInt[row][column] = Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer);
+				  }
+				  return true;
+			  }else{
+				  return false;
+			  }
+		  }else if (gameStateInt[row][column]==Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer)){
+			  return true; //found same color
+		  }else{
+			  return false; //found grass
+		  }
+	  }
+	  
+}

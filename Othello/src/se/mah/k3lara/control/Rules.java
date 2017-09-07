@@ -31,34 +31,52 @@ public class Rules {
   }
   
   public static int[][] turnAllPiecesFromThisNewPiece(int[][] gameStateInt, Action a, ItemState itemStateCurrentPlayer){
-	  if (gameStateInt[a.getRow()][a.getColumn()]==0){
-		  gameStateInt[a.getRow()][a.getColumn()] = Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer);
-		  //go north?
-		  if(a.getRow()>0&&gameStateInt[a.getRow()][a.getColumn()]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){
-			  checkAndTurnNorth(gameStateInt, a.getColumn()-1,a.getRow(),itemStateCurrentPlayer);
-		  }
-		  for (int i = a.getColumn(); 1 >=0; i=i-1){
-			  if(gameStateInt[a.getRow()][a.getColumn()]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){
-				  
-			  }
-		  }
-	  }else{
-		  Controller.getInstance().printInfo("Trying to place a piece on a non empty place");
-	  }
-	  return gameStateInt;
+	  CheckTurn ch = new CheckTurn(gameStateInt, true,a.getRow(),a.getColumn(),itemStateCurrentPlayer);
+	  return ch.getGameStateInt();
   }
   
-  public static boolean checkAndTurnNorth(int[][] gameStateInt, int row,int column, ItemState itemStateCurrentPlayer){
-	  boolean turn = false;
-	  if (row>0&&gameStateInt[row][column]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)) { //still a opponent check next
-			  if(checkAndTurnNorth(gameStateInt, row-1,column,itemStateCurrentPlayer)){ //ok 
-				  turn=true;
+  /*
+  private class CheckTurn{
+	  private int[][] gameStateInt;
+	  private boolean turn;
+	  public CheckTurn(int[][] gameStateInt, boolean turn){
+		  this.gameStateInt = gameStateInt;
+		  this.turn = turn;
+	  }
+	public int[][] getGameStateInt() {
+		return this.gameStateInt;
+	}
+	//Returns true if it is a legal placement
+	public boolean checkOrTurnCenter(int[][] gameStateInt, int row,int column, ItemState itemStateCurrentPlayer,boolean turn){
+		  boolean turnthis = false;
+		  //direction
+		  //East
+		  checkOrTurn(row,column, itemStateCurrentPlayer, 0);
+
+		  return turnthis;
+	  }
+	
+	public boolean checkOrTurn(int row,int column, ItemState itemStateCurrentPlayer, int direction) {
+		  //have we reached the edge of the board?
+		  if(column==Settings.nbrRowsColumns){ //East
+			  return false; //Get the hell out
+		  }
+		  if (gameStateInt[row][column]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){ //Still another color
+			  if(checkOrTurn(row,column+1, itemStateCurrentPlayer, 0)){ //continue check next
+				  if(turn){//shall we turn this when we come back?
+					  gameStateInt[row][column] = Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer);
+				  }
+				  return true;
+			  }else{
+				  return false;
 			  }
+		  }else if (gameStateInt[row][column]==Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer)){
+			  return true; //found same color
+		  }else{
+			  return false; //found grass
+		  }
 	  }
-	  if (row>0&&gameStateInt[row][column]==Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer)){ //Found another of me
-		  turn=true;
-	  }
-	  return turn;
+	  
   }
-  
+  */
 }

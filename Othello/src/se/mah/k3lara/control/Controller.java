@@ -28,17 +28,19 @@ public class Controller {
 	public void nextMove(int row, int column, ItemState currentState, ItemState player){
 		//Check if legal move
 		//If the computer comes with a new draw then ok
+		System.out.println("nextMove "+System.currentTimeMillis());
 		if (player == Settings.computerPlayerMax){
 			pretendToThink = false;
 		}
 		if(!pretendToThink){  //Wating for Agent thinking to complete
 			if (player == Settings.humanPlayerMin){
 				Game.getInstance().setState(row, column, Settings.humanPlayerMin);
-				//Ok start thinkingOOOO
+				System.out.println("Human done computer is up");
 				thinkThread = new ThinkThread();
 				thinkThread.start();
 				pretendToThink = true;
 			}else if(player == Settings.computerPlayerMax){  //Computer player
+				System.out.println("computer done"+row+":"+column);
 				Game.getInstance().setState(row, column, Settings.computerPlayerMax);
 			}
 			switchToNextPlayerTurn();
@@ -76,15 +78,16 @@ public class Controller {
 	public void printGameState (int[][] stateAsInt){
 		String s="";
 		printInfo("****Begin Current gamestate****");
+		printInfo("****black=2 white=1 empty=0****");
 		for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			s="";
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
 			switch (stateAsInt[i][j]) {
 				case 2:
-					s=s+" B ";
+					s=s+" 2 ";
 					break;
 				case 1:
-					s=s+" W ";
+					s=s+" 1 ";
 					break;
 				case 0:
 					s=s+" 0 ";

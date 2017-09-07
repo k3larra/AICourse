@@ -38,12 +38,13 @@ public class Piece implements ActionListener, MouseListener{
 		this.jButton.setBackground(new Color(71,130,12));
 		this.row = row;
 		this.column = column;
-		Game.getInstance().setState(row, column, ItemState.EMPTY);
+		Game.getInstance().setStateUp(row, column, ItemState.EMPTY);
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		 //gameBoard.printInfo("Clicked row:"+row+" column: "+column);
 		if(this.state==ItemState.EMPTY){
+			System.out.println("mousClick "+System.currentTimeMillis());
 		 Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
 		}
 	}

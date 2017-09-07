@@ -1,5 +1,6 @@
 package se.mah.k3lara.control;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import se.mah.k3lara.Helpers;
@@ -10,12 +11,11 @@ import se.mah.k3lara.model.ItemState;
 public class ThinkThread extends Thread {
 	//0=EMPTY, 1=WHITE 2=BLACK
 	private Controller c;
-	private  int[][] gameBoardAsIntArray;
+	//private  int[][] gameBoardAsIntArray;
 	private boolean goOn = true;
 	
 	public ThinkThread (){
-		this.gameBoardAsIntArray = Game.getInstance().getGameStateClone();
-		Controller.getInstance().printInfo("Length: "+this.gameBoardAsIntArray.length);
+		//this.gameBoardAsIntArray = Game.getInstance().getGameStateClone();
 	}
 	
 	public void stopThinkingAndGiveAnAnswer(){
@@ -50,24 +50,20 @@ public class ThinkThread extends Thread {
 		//trash variable
 		int[][] newStateAsIntArray;
 		int value = Integer.MIN_VALUE;
-		try {
-		Thread.sleep(1701);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 		//Get all possible placements and chose max of them
-		for (Action a : Rules.getPossibleActions(stateAsIntArray)) {
+		ArrayList<Action> possibleActions = Rules.getPossibleActions(stateAsIntArray);
+		for (Action a : possibleActions) {
 			//Get a new instance of gameState
 			newStateAsIntArray = stateAsIntArray.clone();
-			//Place the piece 
-			newStateAsIntArray[a.getRow()][a.getColumn()] = Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax);
+			//Place the piece
+			//newStateAsIntArray = Rules.turnAllPiecesFromThisNewPiece(newStateAsIntArray, a, Settings.computerPlayerMax);
+			//newStateAsIntArray[a.getRow()][a.getColumn()] = Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax);
 			int actValue = minValue(newStateAsIntArray);
 			if (actValue>value){
 				value = actValue;
 			}
 		}
-		return new Action(Helpers.getRandomColumnRowNumber(), Helpers.getRandomColumnRowNumber());
+		return possibleActions.get(0);
 	}
 	
 	private int maxValue(int[][] StateAsIntArray){

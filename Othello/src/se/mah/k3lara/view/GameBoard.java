@@ -117,6 +117,7 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 
 	@Override
 	public void setGamePiece(int row, int column, ItemState state) {
+		System.out.println("setGamePiece "+System.currentTimeMillis());
 		switch (state) {
 		case BLACK:
 			gameBoardUI[row][column].setBlack();
