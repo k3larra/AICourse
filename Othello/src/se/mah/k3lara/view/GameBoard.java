@@ -22,6 +22,13 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
 
 
 public class GameBoard extends JFrame implements GameUpdateInterface{
@@ -35,6 +42,11 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 	private JPanel controlPanel;
 	private JTextArea outputArea;
 	private static Piece[][] gameBoardUI;
+	private JPanel settings;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JButton btnNewButton;
+	private JComboBox<String> comboBox;
 
 	/**
 	 * Launch the application.
@@ -87,20 +99,73 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		//Infopanel
 		controlPanel = new JPanel();
 		controlPanel.setPreferredSize(new Dimension(400, 600));
-		controlPanel.setMinimumSize(new Dimension(400, 600));
+		//controlPanel.setMinimumSize(new Dimension(400, 600));
 		controlPanel.setBackground(Color.PINK);
 		//contentPane.add(panel, BorderLayout.WEST);
 		controlPanel.setLayout(new BorderLayout(0, 0));
 		outputArea = new JTextArea();
+		outputArea.setEditable(false);
 		//textArea.setRows(4);
 		JScrollPane scrollPane = new JScrollPane(outputArea);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		controlPanel.add(scrollPane, BorderLayout.CENTER);
 		contentPane.add(controlPanel, BorderLayout.EAST);
+		//settings
+		settings = new JPanel();
+		settings.setBackground(Color.LIGHT_GRAY);
+		settings.setPreferredSize(new Dimension(200,200));
+		controlPanel.add(settings, BorderLayout.NORTH);
+		settings.setLayout(null);
+		//scrollPane.setColumnHeaderView(settings);
+		
+		lblNewLabel = new JLabel("Othello");
+		lblNewLabel.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(12, 9, 150, 16);
+		settings.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("Gamesize");
+		lblNewLabel_1.setBounds(12, 112, 56, 16);
+		settings.add(lblNewLabel_1);
+		
+		btnNewButton = new JButton("New game");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Restart all;
+				Game.getInstance().clearAndReset();
+			}
+		});
+		btnNewButton.setBounds(12, 162, 135, 25);
+		settings.add(btnNewButton);
+		
+		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBox.setToolTipText("seet");
+		comboBox.setBounds(80, 108, 67, 22);
+		comboBox.addItem(new String ("4x4"));
+		comboBox.addItem(new String ("8x8"));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"4x4", "8x8"}));
+		comboBox.setSelectedIndex(1);
+
+		settings.add(comboBox);
+		
+		JTextArea txtrYouAreBlack = new JTextArea();
+		txtrYouAreBlack.setLineWrap(true);
+		txtrYouAreBlack.setRows(2);
+		txtrYouAreBlack.setText("You are black and starts, if unable to move press computers turn.");
+		txtrYouAreBlack.setBounds(12, 34, 228, 57);
+		settings.add(txtrYouAreBlack);
+		
+		JButton btnYourTurn = new JButton("I cannot move your turn Computer...");
+		btnYourTurn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Controller.getInstance().cannotMoveGiveTurnToComputer();
+			}
+		});
+		btnYourTurn.setBounds(166, 163, 171, 25);
+		settings.add(btnYourTurn);		
 		printInfo("Game started");
-		//Setup
-		//Startpieces
-		System.out.println("ROWS:"+ Settings.nbrRowsColumns/2);
 		
 	}
 
@@ -124,6 +189,9 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		case WHITE:
 			gameBoardUI[row][column].setWhite();
 			break;
+		case EMPTY:
+			gameBoardUI[row][column].setEmpty();;
+			break;
 		default:
 			break;
 		}
@@ -135,8 +203,4 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		printInfo(txt);
 		
 	}
-
-
-
-
 }

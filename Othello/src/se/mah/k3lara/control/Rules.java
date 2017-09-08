@@ -27,57 +27,11 @@ public class Rules {
 				}
 			}
 		}
-	  Controller.getInstance().printInfo("Found :"+myActions.size()+" empty places");
 	  return myActions;
   }
   
-  public static ArrayList<Action> turnAllPiecesFromThisNewPiece(int[][] gameStateInt, Action a, ItemState itemStateCurrentPlayer){
+  public static ArrayList<Action> getAllTurnablePiecesFromThisNewPiece(int[][] gameStateInt, Action a, ItemState itemStateCurrentPlayer){
 	  CheckTurn ch = new CheckTurn(gameStateInt,a.getRow(),a.getColumn(),itemStateCurrentPlayer);
 	  return ch.getAllChanged();
   }
-  
-  /*
-  private class CheckTurn{
-	  private int[][] gameStateInt;
-	  private boolean turn;
-	  public CheckTurn(int[][] gameStateInt, boolean turn){
-		  this.gameStateInt = gameStateInt;
-		  this.turn = turn;
-	  }
-	public int[][] getGameStateInt() {
-		return this.gameStateInt;
-	}
-	//Returns true if it is a legal placement
-	public boolean checkOrTurnCenter(int[][] gameStateInt, int row,int column, ItemState itemStateCurrentPlayer,boolean turn){
-		  boolean turnthis = false;
-		  //direction
-		  //East
-		  checkOrTurn(row,column, itemStateCurrentPlayer, 0);
-
-		  return turnthis;
-	  }
-	
-	public boolean checkOrTurn(int row,int column, ItemState itemStateCurrentPlayer, int direction) {
-		  //have we reached the edge of the board?
-		  if(column==Settings.nbrRowsColumns){ //East
-			  return false; //Get the hell out
-		  }
-		  if (gameStateInt[row][column]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){ //Still another color
-			  if(checkOrTurn(row,column+1, itemStateCurrentPlayer, 0)){ //continue check next
-				  if(turn){//shall we turn this when we come back?
-					  gameStateInt[row][column] = Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer);
-				  }
-				  return true;
-			  }else{
-				  return false;
-			  }
-		  }else if (gameStateInt[row][column]==Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer)){
-			  return true; //found same color
-		  }else{
-			  return false; //found grass
-		  }
-	  }
-	  
-  }
-  */
 }

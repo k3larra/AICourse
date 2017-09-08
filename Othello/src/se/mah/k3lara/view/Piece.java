@@ -46,18 +46,22 @@ public class Piece implements ActionListener, MouseListener{
 		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2-1==column){
 			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
 			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
+			state= ItemState.WHITE;
 		}
 		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2==column){
 			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
 			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
+			state= ItemState.WHITE;
 		}
 		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2==column){
 			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
 			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
+			state= ItemState.BLACK;
 		}
 		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2-1==column){
 			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
 			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
+			state= ItemState.BLACK;
 		}
 		
 	}
@@ -65,10 +69,11 @@ public class Piece implements ActionListener, MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		 //gameBoard.printInfo("Clicked row:"+row+" column: "+column);
 		if(this.state==ItemState.EMPTY||mouseOver){
-			if(Rules.turnAllPiecesFromThisNewPiece(Game.getInstance().getGameStateClone(), 
-			new Action(row,column), Settings.humanPlayerMin).size()>0){
+			if(Rules.getAllTurnablePiecesFromThisNewPiece(Game.getInstance().getGameStateClone(),new Action(row,column), Settings.humanPlayerMin).size()>0){
 			     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
 			     mouseOver=false;
+		 }else{
+			 gameBoard.printInfo("Looks like you have noware to move press the button...");
 		 }
 		}
 	}
@@ -76,9 +81,11 @@ public class Piece implements ActionListener, MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		  //gameBoard.printInfo("Entered row:"+row+" column: "+column);
 		  //setWhite();
-		if(this.state==ItemState.EMPTY){
-			if(Rules.turnAllPiecesFromThisNewPiece(Game.getInstance().getGameStateClone(), 
-			new Action(row,column), Settings.humanPlayerMin).size()>0){
+		if(Game.getInstance().getGameStateClone()[row][column]==0){
+			if(Game.getInstance().getGameStateClone()[row][column]!=0){
+				System.out.println("hoppasan");
+			}
+			if(Rules.getAllTurnablePiecesFromThisNewPiece(Game.getInstance().getGameStateClone(),new Action(row,column), Settings.humanPlayerMin).size()>0){
 				switch(Settings.humanPlayerMin){
 					case BLACK:
 						setBlack();
@@ -87,6 +94,8 @@ public class Piece implements ActionListener, MouseListener{
 					case WHITE:
 						setWhite();
 						mouseOver  = true;
+					break;
+					case EMPTY:
 					break;
 				}
 			}
@@ -119,7 +128,6 @@ public class Piece implements ActionListener, MouseListener{
 	public void setBlack(){
 		//Image not centered!!!!!
 			this.jButton.setIcon(getImage(ItemState.BLACK));
-			this.jButton.repaint();
 			state= ItemState.BLACK;
 	}
 	

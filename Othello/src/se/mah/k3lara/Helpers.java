@@ -43,4 +43,14 @@ public class Helpers {
 		}
 		return intState;
 	}
+	
+	public static synchronized int[][] makeDeepCopy(int[][] inArray){
+		int[][] outArray = new int[Settings.nbrRowsColumns][Settings.nbrRowsColumns];
+		 for (int i = 0; i <Settings.nbrRowsColumns; i++){
+				for (int j = 0; j<Settings.nbrRowsColumns;j++){
+					outArray[i][j] = inArray[i][j];
+				}
+			}
+		 return outArray;
+	}
 }

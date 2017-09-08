@@ -2,8 +2,11 @@ package se.mah.k3lara.model;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.control.Action;
+import se.mah.k3lara.control.Controller;
 import se.mah.k3lara.control.Rules;
 
 public class Game {
@@ -31,42 +34,11 @@ public class Game {
 			gameUpdateInterface.setGamePiece(row, column, nextPlayerState);
 			//get the result of other pieces turned...
 			if (nextPlayerState != ItemState.EMPTY){
-				ArrayList<Action> changed = Rules.turnAllPiecesFromThisNewPiece(getGameStateClone(), new Action(row,column), nextPlayerState);
-				System.out.println("Length changed "+changed.size());
+				ArrayList<Action> changed = Rules.getAllTurnablePiecesFromThisNewPiece(getGameStateClone(), new Action(row,column), nextPlayerState);
 				for (Action action : changed) {
-					System.out.println("row "+action.getRow()+" col: "+action.getColumn());
 					gameBoard[action.getRow()][action.getColumn()] = nextPlayerState;
 					gameUpdateInterface.setGamePiece(action.getRow(), action.getColumn(), nextPlayerState);
 				}
-				/*System.out.println("#####newBoard");
-				for (int i = 0; i <Settings.nbrRowsColumns; i++){
-					String s ="";
-					for (int j = 0; j<Settings.nbrRowsColumns;j++){
-						s=s+newBoard[i][j];
-					}
-					System.out.println(s);
-				}
-				System.out.println("#####end newBoard");
-				//And crappy code turn everything again!!!
-				for (int i = 0; i <Settings.nbrRowsColumns; i++){
-					for (int j = 0; j<Settings.nbrRowsColumns;j++){
-						switch(newBoard[i][j]){
-						case 0:
-							gameBoard[i][j] = ItemState.EMPTY;
-							gameUpdateInterface.setGamePiece(i, j, ItemState.EMPTY);
-							break;
-						case 1:
-							gameBoard[i][j] = ItemState.WHITE;
-							gameUpdateInterface.setGamePiece(i, j, ItemState.WHITE);
-							break;
-						case 2:
-							gameBoard[i][j] = ItemState.BLACK;
-							gameUpdateInterface.setGamePiece(i, j, ItemState.BLACK);
-							break;
-						}
-					}
-				}
-				*/
 			}
 			return true;
 		}else{
@@ -114,21 +86,39 @@ public class Game {
 				}
 			}
 		}
-		/*System.out.println("#####in getGameStateClone");
-		for (int i = 0; i <Settings.nbrRowsColumns; i++){
-			String s ="";
-			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-				s=s+stateIntClone[i][j];
-			}
-			System.out.println(s);
-		}
-		System.out.println("#####end In getGameStateClone");*/
 		return stateIntClone;
 	}
 
 	public void setGameRef(GameUpdateInterface gameUpdateInterface) {
 		this.gameUpdateInterface = gameUpdateInterface;
 		
+	}
+	
+	public void clearAndReset(){
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+				System.out.println("Hoj");
+				gameBoard[i][j] = ItemState.EMPTY;
+				gameUpdateInterface.setGamePiece(i, j, ItemState.EMPTY);
+				if(Settings.nbrRowsColumns/2-1==i&&Settings.nbrRowsColumns/2-1==j){
+					gameUpdateInterface.setGamePiece(i, j, ItemState.WHITE);
+					Game.getInstance().setStateUp(i, j, ItemState.WHITE);
+				}
+				if(Settings.nbrRowsColumns/2==i&&Settings.nbrRowsColumns/2==j){
+					gameUpdateInterface.setGamePiece(i, j, ItemState.WHITE);
+					Game.getInstance().setStateUp(i, j, ItemState.WHITE);
+				}
+				if(Settings.nbrRowsColumns/2-1==i&&Settings.nbrRowsColumns/2==j){
+					gameUpdateInterface.setGamePiece(i, j, ItemState.BLACK);
+					Game.getInstance().setStateUp(i, j, ItemState.BLACK);
+				}
+				if(Settings.nbrRowsColumns/2==i&&Settings.nbrRowsColumns/2-1==j){
+					gameUpdateInterface.setGamePiece(i, j, ItemState.BLACK);
+					Game.getInstance().setStateUp(i, j, ItemState.BLACK);
+				}
+			}
+		}
+		Controller.getInstance().printGameState(getGameStateClone());
 	}
 
 }

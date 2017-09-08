@@ -28,26 +28,67 @@ public class Controller {
 	public void nextMove(int row, int column, ItemState currentState, ItemState player){
 		//Check if legal move
 		//If the computer comes with a new draw then ok
-		System.out.println("nextMove "+System.currentTimeMillis());
 		if (player == Settings.computerPlayerMax){
 			pretendToThink = false;
 		}
 		if(!pretendToThink){  //Wating for Agent thinking to complete
 			if (player == Settings.humanPlayerMin){
 				Game.getInstance().setState(row, column, Settings.humanPlayerMin);
-				System.out.println("Human done computer is up");
+				printInfo("Human done computer is up");
 				thinkThread = new ThinkThread();
 				thinkThread.start();
 				pretendToThink = true;
 			}else if(player == Settings.computerPlayerMax){  //Computer player
-				System.out.println("computer done"+row+":"+column);
 				Game.getInstance().setState(row, column, Settings.computerPlayerMax);
+				printInfo("Computer done human is up");
 			}
 			switchToNextPlayerTurn();
 			printGameState(Game.getInstance().getGameStateClone());
 		}else{
 			printInfo("Cannot move paralyzed while pretending to think");
 		}
+		if(gameEnd()){}
+	}
+	
+	private boolean gameEnd() {
+		int numberWhitePieces=0;
+		int numberBlackPieces=0;
+		int numberEmpty=0;
+		int[][] test = Game.getInstance().getGameStateClone();
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+				if(test[i][j]==0){
+					numberEmpty++;
+					return false;
+				}else if((test[i][j]==1)){
+					numberWhitePieces++;
+				}else if((test[i][j]==2)){
+					numberBlackPieces++;
+				}
+			}
+		}
+		if(numberWhitePieces>numberBlackPieces){
+			printInfo("White wins "+numberWhitePieces+" pieces black "+ numberBlackPieces + " pieces");
+		}else if(numberBlackPieces>numberWhitePieces){
+			printInfo("Black wins "+numberBlackPieces+ " pieces white "+numberWhitePieces + "pieces");
+		}else{
+			printInfo("Equal");
+		}
+		int total = numberWhitePieces+ numberBlackPieces;
+		printInfo("Total "+total + " pieces and " + numberEmpty +" empty.");
+		return true;
+	}
+
+	public void cannotMoveGiveTurnToHuman(){
+		printInfo("Computer cannot move human is up");
+			pretendToThink = false;
+	}
+	
+	public void cannotMoveGiveTurnToComputer(){
+		printInfo("Human cannot move computer is up");
+		thinkThread = new ThinkThread();
+		thinkThread.start();
+		pretendToThink = true;
 	}
 	
 
@@ -77,8 +118,7 @@ public class Controller {
 	
 	public void printGameState (int[][] stateAsInt){
 		String s="";
-		printInfo("****Begin Current gamestate****");
-		printInfo("****black=2 white=1 empty=0****");
+		printInfo("****Current gamestate black=2 white=1 empty=0****");
 		for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			s="";
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
@@ -98,8 +138,7 @@ public class Controller {
 				}
 			}
 			printInfo(s);
-			
 		}
-		printInfo("****End Current gamestate****");
+		printInfo("********");
 	}
 }
