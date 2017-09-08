@@ -10,6 +10,7 @@ import se.mah.k3lara.model.ItemState;
 import se.mah.k3lara.view.Piece;
 
 public class Rules {
+	//http://www.hannu.se/games/othello/rules.htm
 	//0= EMPTY, 1=WHITE 2=BLACK
   //private int[][] stateAsIntArray;
  // public Rules(int[][] stateAsIntArray){
@@ -30,9 +31,9 @@ public class Rules {
 	  return myActions;
   }
   
-  public static int[][] turnAllPiecesFromThisNewPiece(int[][] gameStateInt, Action a, ItemState itemStateCurrentPlayer){
-	  CheckTurn ch = new CheckTurn(gameStateInt, true,a.getRow(),a.getColumn(),itemStateCurrentPlayer);
-	  return ch.getGameStateInt();
+  public static ArrayList<Action> turnAllPiecesFromThisNewPiece(int[][] gameStateInt, Action a, ItemState itemStateCurrentPlayer){
+	  CheckTurn ch = new CheckTurn(gameStateInt,a.getRow(),a.getColumn(),itemStateCurrentPlayer);
+	  return ch.getAllChanged();
   }
   
   /*

@@ -69,10 +69,6 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		contentPane.setLayout(new BorderLayout(0, 0));
 		//Create the GameBoard
 		gamePanel = new JPanel();
-	    //gamePanel.setSize(800,800);
-		//gamePanel.setMinimumSize(new Dimension(800,800));
-		//gamePanel.setMaximumSize(new Dimension(800,800));
-		//gamePanel.setPreferredSize(new Dimension(800,800));
 		gamePanel.setBackground(Color.BLACK);
 		contentPane.add(gamePanel, BorderLayout.CENTER);
 		gamePanel.setLayout(new GridLayout(Settings.nbrRowsColumns, Settings.nbrRowsColumns, 2, 2));
@@ -84,6 +80,8 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 				gameBoardUI[i][j] = new Piece(this,jButton,i,j);
 			}
 		}
+		
+		
 		
 		
 		//Infopanel
@@ -100,7 +98,9 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		controlPanel.add(scrollPane, BorderLayout.CENTER);
 		contentPane.add(controlPanel, BorderLayout.EAST);
 		printInfo("Game started");
-
+		//Setup
+		//Startpieces
+		System.out.println("ROWS:"+ Settings.nbrRowsColumns/2);
 		
 	}
 
@@ -117,17 +117,17 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 
 	@Override
 	public void setGamePiece(int row, int column, ItemState state) {
-		System.out.println("setGamePiece "+System.currentTimeMillis());
 		switch (state) {
 		case BLACK:
 			gameBoardUI[row][column].setBlack();
 			break;
 		case WHITE:
-			gameBoardUI[row][column].setWhite();;
+			gameBoardUI[row][column].setWhite();
 			break;
 		default:
 			break;
 		}
+		
 	}
 
 	@Override

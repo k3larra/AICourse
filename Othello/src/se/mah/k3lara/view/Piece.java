@@ -16,8 +16,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import se.mah.k3lara.Settings;
+import se.mah.k3lara.control.Action;
 import se.mah.k3lara.control.Controller;
 import se.mah.k3lara.control.OutputLevel;
+import se.mah.k3lara.control.Rules;
 import se.mah.k3lara.model.Game;
 import se.mah.k3lara.model.ItemState;
 import se.mah.k3lara.model.tryit;
@@ -28,33 +30,73 @@ public class Piece implements ActionListener, MouseListener{
 	private JButton jButton;
 	private int row;
 	private int column;
+	private boolean mouseOver = false;
 	public Piece(GameBoard gameBoard, JButton jButton,int row, int column){
 		this.gameBoard = gameBoard;
 		this.jButton = jButton;
+		this.jButton.setBorderPainted(false);
 		this.jButton.addActionListener(this);
 		this.jButton.addMouseListener(this);
 		this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grass.jpg")));
+		Game.getInstance().setStateUp(row, column, ItemState.EMPTY);
 		//Crap
 		this.jButton.setBackground(new Color(71,130,12));
 		this.row = row;
 		this.column = column;
-		Game.getInstance().setStateUp(row, column, ItemState.EMPTY);
+		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2-1==column){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
+		}
+		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2==column){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
+		}
+		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2==column){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
+		}
+		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2-1==column){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
+		}
+		
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		 //gameBoard.printInfo("Clicked row:"+row+" column: "+column);
-		if(this.state==ItemState.EMPTY){
-			System.out.println("mousClick "+System.currentTimeMillis());
-		 Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
+		if(this.state==ItemState.EMPTY||mouseOver){
+			if(Rules.turnAllPiecesFromThisNewPiece(Game.getInstance().getGameStateClone(), 
+			new Action(row,column), Settings.humanPlayerMin).size()>0){
+			     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
+			     mouseOver=false;
+		 }
 		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		  //gameBoard.printInfo("Entered row:"+row+" column: "+column);
 		  //setWhite();
+		if(this.state==ItemState.EMPTY){
+			if(Rules.turnAllPiecesFromThisNewPiece(Game.getInstance().getGameStateClone(), 
+			new Action(row,column), Settings.humanPlayerMin).size()>0){
+				switch(Settings.humanPlayerMin){
+					case BLACK:
+						setBlack();
+						mouseOver = true;
+					break;
+					case WHITE:
+						setWhite();
+						mouseOver  = true;
+					break;
+				}
+			}
+		}
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
+		if(mouseOver){
+			setEmpty();
+		}
 		 //gameBoard.printInfo("Exited row:"+row+" column: "+column);
 		 //setEmpty();
 	}
@@ -77,6 +119,7 @@ public class Piece implements ActionListener, MouseListener{
 	public void setBlack(){
 		//Image not centered!!!!!
 			this.jButton.setIcon(getImage(ItemState.BLACK));
+			this.jButton.repaint();
 			state= ItemState.BLACK;
 	}
 	

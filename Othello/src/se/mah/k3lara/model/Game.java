@@ -1,5 +1,7 @@
 package se.mah.k3lara.model;
 
+import java.util.ArrayList;
+
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.control.Action;
 import se.mah.k3lara.control.Rules;
@@ -25,15 +27,18 @@ public class Game {
 		//Valid row and empty spot?
 		if (Settings.isColumnOrRowValueLegal(row)&&Settings.isColumnOrRowValueLegal(column)&&gameBoard[row][column]==ItemState.EMPTY){
 			//Here the piece is placed both in GUI and in model
-			System.out.println("setState "+System.currentTimeMillis());
 			gameBoard[row][column] = nextPlayerState;
-			System.out.println("setState "+System.currentTimeMillis());
 			gameUpdateInterface.setGamePiece(row, column, nextPlayerState);
-			System.out.println("setState "+System.currentTimeMillis());
 			//get the result of other pieces turned...
 			if (nextPlayerState != ItemState.EMPTY){
-				int[][] newBoard = Rules.turnAllPiecesFromThisNewPiece(getGameStateClone(), new Action(row,column), nextPlayerState);
-				System.out.println("#####newBoard");
+				ArrayList<Action> changed = Rules.turnAllPiecesFromThisNewPiece(getGameStateClone(), new Action(row,column), nextPlayerState);
+				System.out.println("Length changed "+changed.size());
+				for (Action action : changed) {
+					System.out.println("row "+action.getRow()+" col: "+action.getColumn());
+					gameBoard[action.getRow()][action.getColumn()] = nextPlayerState;
+					gameUpdateInterface.setGamePiece(action.getRow(), action.getColumn(), nextPlayerState);
+				}
+				/*System.out.println("#####newBoard");
 				for (int i = 0; i <Settings.nbrRowsColumns; i++){
 					String s ="";
 					for (int j = 0; j<Settings.nbrRowsColumns;j++){
@@ -61,6 +66,7 @@ public class Game {
 						}
 					}
 				}
+				*/
 			}
 			return true;
 		}else{
