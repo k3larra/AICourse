@@ -120,5 +120,6 @@ public class Game {
 		}
 		Controller.getInstance().printGameState(getGameStateClone());
 	}
+	
 
 }

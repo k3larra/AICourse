@@ -17,7 +17,7 @@ public class Rules {
 //	  this.stateAsIntArray = stateAsIntArray;
 //  }
   
-  public static ArrayList<Action> getPossibleActions(int[][] stateAsIntArray){
+  public static ArrayList<Action> getEmptyPositions(int[][] stateAsIntArray){
 	  ArrayList<Action> myActions = new ArrayList<Action>();
 	  //Start with getting all possible actions
 	  for (int i = 0; i <Settings.nbrRowsColumns; i++){

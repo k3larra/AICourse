@@ -87,7 +87,7 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		JButton jButton;
 		for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-				jButton = new JButton("i:"+i+" j:"+j);
+				jButton = new JButton("");
 				gamePanel.add(jButton);
 				gameBoardUI[i][j] = new Piece(this,jButton,i,j);
 			}
