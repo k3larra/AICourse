@@ -1,12 +1,8 @@
 package se.mah.k3lara.model;
 
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.control.Action;
-import se.mah.k3lara.control.Controller;
 import se.mah.k3lara.control.Rules;
 
 public class Game {
@@ -95,30 +91,6 @@ public class Game {
 	}
 	
 	public void clearAndReset(){
-		/*for (int i = 0; i <Settings.nbrRowsColumns; i++){
-			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-				System.out.println("Hoj");
-				gameBoard[i][j] = ItemState.EMPTY;
-				gameUpdateInterface.setGamePiece(i, j, ItemState.EMPTY);
-				if(Settings.nbrRowsColumns/2-1==i&&Settings.nbrRowsColumns/2-1==j){
-					gameUpdateInterface.setGamePiece(i, j, ItemState.WHITE);
-					Game.getInstance().setStateUp(i, j, ItemState.WHITE);
-				}
-				if(Settings.nbrRowsColumns/2==i&&Settings.nbrRowsColumns/2==j){
-					gameUpdateInterface.setGamePiece(i, j, ItemState.WHITE);
-					Game.getInstance().setStateUp(i, j, ItemState.WHITE);
-				}
-				if(Settings.nbrRowsColumns/2-1==i&&Settings.nbrRowsColumns/2==j){
-					gameUpdateInterface.setGamePiece(i, j, ItemState.BLACK);
-					Game.getInstance().setStateUp(i, j, ItemState.BLACK);
-				}
-				if(Settings.nbrRowsColumns/2==i&&Settings.nbrRowsColumns/2-1==j){
-					gameUpdateInterface.setGamePiece(i, j, ItemState.BLACK);
-					Game.getInstance().setStateUp(i, j, ItemState.BLACK);
-				}
-			}
-		}
-		Controller.getInstance().printGameState(getGameStateClone());*/
 		instance=null;
 	}
 	

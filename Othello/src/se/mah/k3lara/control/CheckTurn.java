@@ -30,18 +30,6 @@ public class CheckTurn{
 	}
 	
 	private void checkOrTurnCenter(int row,int column, ItemState itemStateCurrentPlayer){
-		//east
-/*		System.out.println("#####BEFORE checoOrTurn");
-
-		for (int i = 0; i <Settings.nbrRowsColumns; i++){
-			String s ="";
-			for (int j = 0; j<Settings.nbrRowsColumns;j++){
-				s=s+gameStateInt[i][j];
-			}
-			System.out.println(s);
-		}
-		System.out.println("#####B");*/
-		 //checkOrTurn(row,column+1,itemStateCurrentPlayer, 0);
 		for (double f = 0; f<=2*Math.PI;f=f+Math.PI/4){
 			 int x=Math.round((float)Math.cos(f));
 			 int y=Math.round((float)Math.sin(f));
@@ -52,7 +40,6 @@ public class CheckTurn{
 	
 	private boolean checkOrTurn(int row,int column, ItemState itemStateCurrentPlayer, int x, int y) {
 		  //have we reached the edge of the board?
-		 
 		  if(column==Settings.nbrRowsColumns||column<0){
 			  return false; //Get the hell out
 		  }
@@ -61,10 +48,7 @@ public class CheckTurn{
 		  }
 		  if (gameStateInt[row][column]==Helpers.getOpponentPlayerCorrespondingInt(itemStateCurrentPlayer)){ //Still another color
 			  if(checkOrTurn(row+y,column+x, itemStateCurrentPlayer, x, y)){ //continue check next
-				  //if(turn){//shall we turn this when we come back?
-					 //gameStateInt[row][column] = Helpers.getPlayerCorrespondingInt(itemStateCurrentPlayer);
 					 changed.add(new Action(row,column));
-				  //}
 				  return true;
 			  }else{
 				  return false;

@@ -1,8 +1,6 @@
 package se.mah.k3lara.control;
 
 import java.util.ArrayList;
-
-import se.mah.k3lara.Helpers;
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.model.Game;
 import se.mah.k3lara.model.GameUpdateInterface;

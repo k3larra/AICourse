@@ -1,28 +1,19 @@
 package se.mah.k3lara.view;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.lang.invoke.SwitchPoint;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.control.Action;
 import se.mah.k3lara.control.Controller;
-import se.mah.k3lara.control.OutputLevel;
 import se.mah.k3lara.control.Rules;
 import se.mah.k3lara.model.Game;
 import se.mah.k3lara.model.ItemState;
-import se.mah.k3lara.model.tryit;
 
 public class Piece implements ActionListener, MouseListener{
 	private GameBoard gameBoard;
@@ -87,20 +78,19 @@ public class Piece implements ActionListener, MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
 		if(this.state==ItemState.EMPTY||mouseOver){
 			if(Rules.getAllTurnablePiecesFromThisNewPiece(Game.getInstance().getGameStateClone(),new Action(row,column), Settings.humanPlayerMin).size()>0){
-				     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
-				     mouseOver=false;
+				     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);	
+						mouseOver=false;
 			 }else{
 				 gameBoard.printInfo("Looks like you have nowhere to move press the button...");
-				 mouseOver=false;
+					mouseOver=false;
 			 }
 		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		  //gameBoard.printInfo("Entered row:"+row+" column: "+column);
-		  //setWhite();
 		if(Game.getInstance().getGameStateClone()[row][column]==0){
 			if(Game.getInstance().getGameStateClone()[row][column]!=0){
 				System.out.println("hoppsan");
@@ -119,6 +109,8 @@ public class Piece implements ActionListener, MouseListener{
 					break;
 				}
 			}
+		}else{
+			mouseOver = false;
 		}
 	}
 	@Override
@@ -126,8 +118,6 @@ public class Piece implements ActionListener, MouseListener{
 		if(mouseOver){
 			setEmpty();
 		}
-		 //gameBoard.printInfo("Exited row:"+row+" column: "+column);
-		 //setEmpty();
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

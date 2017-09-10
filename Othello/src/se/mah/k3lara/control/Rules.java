@@ -2,20 +2,12 @@ package se.mah.k3lara.control;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
-import se.mah.k3lara.Helpers;
 import se.mah.k3lara.Settings;
 import se.mah.k3lara.model.ItemState;
-import se.mah.k3lara.view.Piece;
 
 public class Rules {
 	//http://www.hannu.se/games/othello/rules.htm
 	//0= EMPTY, 1=WHITE 2=BLACK
-  //private int[][] stateAsIntArray;
- // public Rules(int[][] stateAsIntArray){
-//	  this.stateAsIntArray = stateAsIntArray;
-//  }
   
   public static ArrayList<Action> getEmptyPositions(int[][] stateAsIntArray){
 	  ArrayList<Action> myActions = new ArrayList<Action>();

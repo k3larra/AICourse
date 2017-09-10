@@ -1,7 +1,8 @@
 package se.mah.k3lara.control;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import se.mah.k3lara.Helpers;
 import se.mah.k3lara.Settings;
@@ -19,26 +20,36 @@ public class ThinkThread extends Thread {
 	 * Deadlock human wins 2
 	 * Human wins 1
 	*/
-	private Controller c;
-	private boolean goOn = true;
+	private boolean stopAndReturnresult = false;
 	private int deepestlevel=1;
 	private int shallowestlevel= Integer.MAX_VALUE;
 	private int depthThisBranch=1;
 	private int nodesInvestigated=0;
+	private int leavesChecked=0;
+	private int alphaPruningValue = Integer.MIN_VALUE;
+	private int betaPruningValue = Integer.MAX_VALUE;
 	public ThinkThread (){}
 	
-	public void stopThinkingAndGiveAnAnswer(){
-		goOn = false;
-	}
 	
 	@Override
 	public void run() {
 			long start = System.currentTimeMillis();
+			stopAndReturnresult = false;
+			alphaPruningValue = Integer.MIN_VALUE;
+			betaPruningValue = Integer.MAX_VALUE;
+			new Timer().schedule(new TimerTask() {
+				  @Override
+				  public void run() {
+				    System.out.println("Stop");
+				    stopAndReturnresult=true;
+				  }
+				}, Settings.computerMaxThinkingtimeInSeconds*1000);
 			Action a = minMaxDecision(Game.getInstance().getGameStateClone());
 			double duration = Math.round((System.currentTimeMillis()-start)/10.0)/100.0;
 			if (a!=null){
 				Controller.getInstance().printInfo("Ok done thinking it took: "+duration+" seconds.");
 				Controller.getInstance().printInfo("Examined "+ nodesInvestigated+" nodes reaching a depth of "+deepestlevel+" layers, shallowest " +shallowestlevel);
+				Controller.getInstance().printInfo("reached "+ leavesChecked+" leaves.");
 				Controller.getInstance().printInfo("Computer will put a WHITE at [ "+ a.getRow()+","+a.getColumn()+" ].");
 				Controller.getInstance().nextMove(a.getRow() ,a.getColumn(), null, Settings.computerPlayerMax);
 			}else{
@@ -50,7 +61,14 @@ public class ThinkThread extends Thread {
 		int value = Integer.MIN_VALUE;
 		//Get all possible moves
 		ArrayList<Action> possibleMoves = getAllPossibleMoves(stateAsIntArray,Settings.computerPlayerMax);
-		Controller.getInstance().printInfo("There are: "+possibleMoves.size()+" possible moves at the first level");
+		Controller.getInstance().printInfo("Computer will select from: "+possibleMoves.size()+" possible moves at the first level");
+		
+		synchronized (possibleMoves) {
+			if(possibleMoves.size()==1){
+				//no need to think
+				return possibleMoves.get(0);
+			}
+		}
 		nodesInvestigated++;
 		Action ultimateMove=null;
 		for (Action a : possibleMoves){
@@ -63,10 +81,15 @@ public class ThinkThread extends Thread {
 			if (possibleMoves.size()>0&&ultimateMove==null){
 				Controller.getInstance().printInfo("Strange");
 			}
+			
 			depthThisBranch=1;
 		}
-		if(value>5){
-			Controller.getInstance().printInfo("PS: you dont have a chance whatever you do (I could be a little wrong still)");
+		Controller.getInstance().printInfo("Value on my turn"+value);
+		if(value>5){ //killlermove
+			if(!stopAndReturnresult){
+				Controller.getInstance().printInfo("And it should guarantee a victory");
+				return ultimateMove;
+			}
 		}
 		if (possibleMoves.size()>0){
 			return ultimateMove;
@@ -77,6 +100,11 @@ public class ThinkThread extends Thread {
 	}
 	
 	private int maxValue(int[][] stateAsIntArray){
+		if(stopAndReturnresult){
+			//Estimate a utility here
+			//Needs tuning
+			return returnEstimateUtility(stateAsIntArray);
+		}
 		nodesInvestigated++;
 		depthThisBranch++;
 		int value = Integer.MIN_VALUE;
@@ -88,11 +116,13 @@ public class ThinkThread extends Thread {
 				if(getAllPossibleMoves(stateAsIntArray, Settings.humanPlayerMin).size()>0){
 					checkdepths(depthThisBranch);
 					depthThisBranch--; //The computer can't move thats kinda bad stop here and do not investigate what will happen if the human takes over
+					leavesChecked++;
 					return 4;
 				}
 			}
 			checkdepths(depthThisBranch);
 			depthThisBranch--;
+			leavesChecked++;
 			return utilityValue(stateAsIntArray);
 		}
 		for (Action action : possibleMoves) {
@@ -101,13 +131,28 @@ public class ThinkThread extends Thread {
 			if (actValue>value){
 				value = actValue;
 			}
+			//pruning 
+			if(Settings.pruning){
+				if (value>=betaPruningValue){
+					depthThisBranch--;
+					return value;
+				}
+				alphaPruningValue = Math.max(alphaPruningValue, value);
+			}
 		}
 		depthThisBranch--;
 		return value;
 	}
 	
+
+
+
 	private int minValue(int[][] stateAsIntArray){
 		//Terminal test (state) returns a utility value
+		if(stopAndReturnresult){
+			//Needs tuning
+			return returnEstimateUtility(stateAsIntArray);
+		}
 		depthThisBranch++;
 		int value = Integer.MAX_VALUE;
 		ArrayList<Action> possibleMoves = getAllPossibleMoves(stateAsIntArray,Settings.humanPlayerMin);
@@ -118,10 +163,12 @@ public class ThinkThread extends Thread {
 			if(possibleMoves.size()<1){
 				checkdepths(depthThisBranch);
 				depthThisBranch--;
+				leavesChecked++;
 				return 7; //The human can't move thats kinda good let's stop here and do not investigate what will happen if the computer takes over
 			}
 			checkdepths(depthThisBranch);
 			depthThisBranch--;
+			leavesChecked++;
 			return utilityValue(stateAsIntArray);
 		}
 		
@@ -129,6 +176,13 @@ public class ThinkThread extends Thread {
 			int actValue = maxValue(makeTheMovePlusTurnAllAffectedPieces(stateAsIntArray, action, Settings.humanPlayerMin));
 			if (actValue<value){
 				value = actValue;
+			}
+			if(Settings.pruning){
+				if (value<=alphaPruningValue){
+					depthThisBranch--;
+					return value;
+				}
+				betaPruningValue = Math.min(betaPruningValue,value);
 			}
 		}
 		if(depthThisBranch>deepestlevel){
@@ -161,7 +215,7 @@ public class ThinkThread extends Thread {
 				return 10;
 			}
 		}else if (computer==human){
-			System.out.println("HOHo");
+			System.out.println("Even check this");
 			return 5; //perhaps....
 		}else{
 			if(deadEnd){
@@ -203,5 +257,55 @@ public class ThinkThread extends Thread {
 		if(depthThisBranch<shallowestlevel){
 			shallowestlevel=depthThisBranch;
 		}
+	}
+	
+	private int returnEstimateUtility(int[][] in) {
+		int computer =0;
+		int human = 0;
+		int computerCorner=0;
+		int humanCorner=0;
+		int numberPiecesTotal = Settings.nbrRowsColumns*Settings.nbrRowsColumns;
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+				if(Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax)==in[i][j]){
+					computer++;
+				}else if(Helpers.getOpponentPlayerCorrespondingInt(Settings.computerPlayerMax)==in[i][j]){
+					human++;
+				}
+				
+			}
+		}
+		double estimate = 10*(((computer-human)/numberPiecesTotal)+1);
+		if(in[0][0]==Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax)){
+			computerCorner++;
+		}
+		if(in[0][0]==Helpers.getPlayerCorrespondingInt(Settings.humanPlayerMin)){
+			humanCorner++;
+		}
+		if(in[0][Settings.nbrRowsColumns-1]==Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax)){
+			computerCorner++;
+		}
+		if(in[0][Settings.nbrRowsColumns-1]==Helpers.getPlayerCorrespondingInt(Settings.humanPlayerMin)){
+			humanCorner++;
+		}
+		if(in[Settings.nbrRowsColumns-1][0]==Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax)){
+			computerCorner++;
+		}
+		if(in[Settings.nbrRowsColumns-1][0]==Helpers.getPlayerCorrespondingInt(Settings.humanPlayerMin)){
+			humanCorner++;
+		}
+		if(in[Settings.nbrRowsColumns-1][Settings.nbrRowsColumns-1]==Helpers.getPlayerCorrespondingInt(Settings.computerPlayerMax)){
+			computerCorner++;
+		}
+		if(in[Settings.nbrRowsColumns-1][Settings.nbrRowsColumns-1]==Helpers.getPlayerCorrespondingInt(Settings.humanPlayerMin)){
+			humanCorner++;
+		}
+		estimate = estimate +computerCorner - humanCorner;
+		if (estimate>9){
+			estimate=9;
+		}else if(estimate<2){
+			estimate=2;
+		}
+		return (int)estimate;
 	}
 }
