@@ -85,7 +85,7 @@ public class ThinkThread extends Thread {
 			depthThisBranch=1;
 		}
 		Controller.getInstance().printInfo("Value on my turn"+value);
-		if(value>5){ //killlermove
+		if(value>5){ //killermove
 			if(!stopAndReturnresult){
 				Controller.getInstance().printInfo("And it should guarantee a victory");
 				return ultimateMove;
