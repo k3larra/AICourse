@@ -179,5 +179,7 @@ public class Controller {
 		printInfo("********");
 	}
 	
-
+	public void clearAndReset(){
+		instance=null;
+	}
 }

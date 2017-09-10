@@ -95,7 +95,7 @@ public class Game {
 	}
 	
 	public void clearAndReset(){
-		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+		/*for (int i = 0; i <Settings.nbrRowsColumns; i++){
 			for (int j = 0; j<Settings.nbrRowsColumns;j++){
 				System.out.println("Hoj");
 				gameBoard[i][j] = ItemState.EMPTY;
@@ -118,7 +118,8 @@ public class Game {
 				}
 			}
 		}
-		Controller.getInstance().printGameState(getGameStateClone());
+		Controller.getInstance().printGameState(getGameStateClone());*/
+		instance=null;
 	}
 	
 

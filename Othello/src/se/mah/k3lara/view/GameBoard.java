@@ -133,13 +133,19 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Restart all;
-				Game.getInstance().clearAndReset();
+				//Game.getInstance().clearAndReset();
+				resetGame();
 			}
 		});
 		btnNewButton.setBounds(12, 162, 135, 25);
 		settings.add(btnNewButton);
 		
 		comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox.setToolTipText("seet");
 		comboBox.setBounds(80, 108, 67, 22);
@@ -201,6 +207,27 @@ public class GameBoard extends JFrame implements GameUpdateInterface{
 	@Override
 	public void printInformation(String txt) {
 		printInfo(txt);
-		
+	}
+	
+	private void resetGame(){
+		gamePanel.removeAll();
+		gameBoardUI = new Piece[Settings.nbrRowsColumns][Settings.nbrRowsColumns];
+		Game.getInstance().clearAndReset();
+		Game.getInstance().setGameRef(this);
+		Controller.getInstance().clearAndReset();
+		Controller.getInstance().setGameRef(this);
+		gamePanel = new JPanel();
+		gamePanel.setBackground(Color.BLACK);
+		contentPane.add(gamePanel, BorderLayout.CENTER);
+		gamePanel.setLayout(new GridLayout(Settings.nbrRowsColumns, Settings.nbrRowsColumns, 2, 2));
+		JButton jButton;
+		for (int i = 0; i <Settings.nbrRowsColumns; i++){
+			for (int j = 0; j<Settings.nbrRowsColumns;j++){
+				jButton = new JButton("");
+				gamePanel.add(jButton);
+				gameBoardUI[i][j] = new Piece(this,jButton,i,j);
+			}
+		}
+		outputArea.setText("");
 	}
 }

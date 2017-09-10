@@ -37,29 +37,49 @@ public class Piece implements ActionListener, MouseListener{
 		this.jButton.setBorderPainted(false);
 		this.jButton.addActionListener(this);
 		this.jButton.addMouseListener(this);
-		this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grass.jpg")));
+		if(Settings.nbrRowsColumns==8){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grassmall.jpg")));
+		}else{
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grass.jpg")));
+		}
 		Game.getInstance().setStateUp(row, column, ItemState.EMPTY);
 		//Crap
 		this.jButton.setBackground(new Color(71,130,12));
 		this.row = row;
 		this.column = column;
 		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2-1==column){
-			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			if(Settings.nbrRowsColumns==8){
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/whitesmall.jpg")));
+			}else{
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			}
 			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
 			state= ItemState.WHITE;
 		}
 		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2==column){
-			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			if(Settings.nbrRowsColumns==8){
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/whitesmall.jpg")));
+			}else{
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+			}
 			Game.getInstance().setStateUp(row, column, ItemState.WHITE);
 			state= ItemState.WHITE;
 		}
 		if(Settings.nbrRowsColumns/2-1==row&&Settings.nbrRowsColumns/2==column){
-			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			if(Settings.nbrRowsColumns==8){
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/blacksmall.jpg")));
+			}else{
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			}
 			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
 			state= ItemState.BLACK;
 		}
 		if(Settings.nbrRowsColumns/2==row&&Settings.nbrRowsColumns/2-1==column){
-			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			if(Settings.nbrRowsColumns==8){
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/blacksmall.jpg")));
+			}else{
+				this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+			}
 			Game.getInstance().setStateUp(row, column, ItemState.BLACK);
 			state= ItemState.BLACK;
 		}
@@ -67,14 +87,14 @@ public class Piece implements ActionListener, MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		 //gameBoard.printInfo("Clicked row:"+row+" column: "+column);
 		if(this.state==ItemState.EMPTY||mouseOver){
 			if(Rules.getAllTurnablePiecesFromThisNewPiece(Game.getInstance().getGameStateClone(),new Action(row,column), Settings.humanPlayerMin).size()>0){
-			     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
-			     mouseOver=false;
-		 }else{
-			 gameBoard.printInfo("Looks like you have noware to move press the button...");
-		 }
+				     Controller.getInstance().nextMove(row, column,state,Settings.humanPlayerMin);
+				     mouseOver=false;
+			 }else{
+				 gameBoard.printInfo("Looks like you have nowhere to move press the button...");
+				 mouseOver=false;
+			 }
 		}
 	}
 	@Override
@@ -83,7 +103,7 @@ public class Piece implements ActionListener, MouseListener{
 		  //setWhite();
 		if(Game.getInstance().getGameStateClone()[row][column]==0){
 			if(Game.getInstance().getGameStateClone()[row][column]!=0){
-				System.out.println("hoppasan");
+				System.out.println("hoppsan");
 			}
 			if(Rules.getAllTurnablePiecesFromThisNewPiece(Game.getInstance().getGameStateClone(),new Action(row,column), Settings.humanPlayerMin).size()>0){
 				switch(Settings.humanPlayerMin){
@@ -126,45 +146,28 @@ public class Piece implements ActionListener, MouseListener{
 	}
 	
 	public void setBlack(){
-		//Image not centered!!!!!
-			this.jButton.setIcon(getImage(ItemState.BLACK));
-			state= ItemState.BLACK;
+		if(Settings.nbrRowsColumns==8){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/blacksmall.jpg")));
+		}else{
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/black.jpg")));
+		}
+		state= ItemState.BLACK;
 	}
 	
 	public void setWhite(){
-		//Image not centered!!!!!
-		this.jButton.setIcon(getImage(ItemState.WHITE));
+		if(Settings.nbrRowsColumns==8){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/whitesmall.jpg")));
+		}else{
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/white.jpg")));
+		}
 		state= ItemState.WHITE;
 	}
 	public void setEmpty(){
-		//Image not centered!!!!!
-		this.jButton.setIcon(getImage(ItemState.EMPTY));
+		if(Settings.nbrRowsColumns==8){
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grassmall.jpg")));
+		}else{
+			this.jButton.setIcon(new ImageIcon(Game.class.getResource("/se/mah/k3lara/resources/grass.jpg")));
+		}
 		state= ItemState.EMPTY;
-	}
-	
-	private ImageIcon getImage(ItemState state){
-		 BufferedImage bI = null;
-		 Image i2 = null;
-		 ImageIcon ia = null;
-			try {
-				switch (state) {
-				case EMPTY:
-					bI = ImageIO.read(Game.class.getResource("/se/mah/k3lara/resources/grass.jpg"));
-					break;
-				case BLACK:
-					bI = ImageIO.read(Game.class.getResource("/se/mah/k3lara/resources/black.jpg"));
-					break;
-				case WHITE:
-					bI = ImageIO.read(Game.class.getResource("/se/mah/k3lara/resources/white.jpg"));
-					break;
-				default:
-					break;
-				}
-				i2 = bI.getScaledInstance(this.jButton.getWidth(), this.jButton.getHeight(), java.awt.Image.SCALE_SMOOTH);
-				ia = new ImageIcon(i2);
-			} catch (IOException e2) {
-				gameBoard.printInfo("No image found");
-			}
-			return ia;
 	}
 }
