@@ -1,5 +1,5 @@
-class Item:
-     def __init__(self, value, weight):
-         self.value = value
-         self.weitht = weight
-         self.friendlyName = ""
+import numpy as np
+
+A = np.arange(2)
+np.random.shuffle(A)
+print(A)
