@@ -1,21 +1,21 @@
-### Algoritm greedy for the knappsack problem
+### Algorithm greedy for the knapsack problem
 ```
 function GREEDY-ALGORITHM(problem) returns a solution
-    knappsacks <- m knappsacs with capacity W
+    knappsacks <- m knapsacks with capacity W
     items <- n items with value p and weight w 
-    state <- packlist, description of an item packed in a knappsack
+    state <- packlist, description of an item packed in a knapsack
     repeat
-        items <-UPDATE-STATE(state, knappsacks, items)
+        items <-UPDATE-STATE(state, knapsacks, items)
         if items not empty 
-            for each knappsack in random order do
-                if knappsack kan hold item then
-                    knappsack <- add
+            for each knapsack in random order do
+                if knapsack kan hold item then
+                    knapsack <- add
                     exit for            
-    until all items picked or no items fits in knappsack   
+    until all items picked or no items fits in knapsack   
 ```
 ****
 ```
-function UPDATE-STATE(state,knappsacks,items) returns a list of items
+function UPDATE-STATE(state,knapsacks,items) returns a list of items
     order items by value (p/w)
     return list
 ```

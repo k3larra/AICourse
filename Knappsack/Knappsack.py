@@ -166,13 +166,13 @@ def setup(_numberKnappsacks, _knappsacksWeightsLow, _knappsacksWeightsHigh,
     X = np.zeros((_numberKnappsacks, _numberItems), dtype=np.int)
 
 
-print('Knappsack problem')
-print('0: Greedy Algorithm 25 knappsacks 30-60kg 1000 items 2-10kg value 1-100 '
+print('Knapsack problem')
+print('0: Greedy Algorithm 25 knapsacks 30-60kg 1000 items 2-10kg value 1-100 '
       '+ plot packed items (takes around 10sec)')
-print('1: Greedy Algorithm 5 knappsacks 30-60kg 100 items value 1-100, 2-10 kg + plot packed items')
-print('2: Greedy Algorithm 5 knappsacks 30-60kg 10 items value 1-100, '
+print('1: Greedy Algorithm 5 knapsacks 30-60kg 100 items value 1-100, 2-10 kg + plot packed items')
+print('2: Greedy Algorithm 5 knapsacks 30-60kg 10 items value 1-100, '
       '2-10 kg + plot packed items (All items fit in packs)')
-print('3: Greedy Algorithm 5 knappsacks 13,17,23,29,31,37,41,43,47,53 kg 200 items value 1-100, '
+print('3: Greedy Algorithm 5 knapsacks 13,17,23,29,31,37,41,43,47,53 kg 200 items value 1-100, '
       '7-11 kg + plot packed items')
 print('4: Greedy Algorithm like 0 but run 10 times and plot histogram over values (takes around a minute)')
 print('5: Greedy Algorithm like 1 but run 100 times and plot histogram over values')
