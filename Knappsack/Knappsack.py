@@ -1,9 +1,12 @@
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import pandas as pd
-import numpy as np
+from __future__ import division
+from __future__ import print_function
+
+from tempfile import TemporaryFile
+import os
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 # Values most will be overridden.... bellow..
 numberItems = 10
@@ -165,6 +168,9 @@ def setup(_numberKnappsacks, _knappsacksWeightsLow, _knappsacksWeightsHigh,
                                                    size=(_numberKnappsacks, 1))
     X = np.zeros((_numberKnappsacks, _numberItems), dtype=np.int)
 
+print(os.path.dirname(os.path.abspath(__file__)))
+print("**")
+print(os.getcwd())
 
 print('Knapsack problem')
 print('0: Greedy Algorithm 25 knapsacks 30-60kg 1000 items 2-10kg value 1-100 '
@@ -238,15 +244,26 @@ if opt == 6:
     plt.hist(result)
     plt.show()
 if opt == 7:
-    setup(10, 1, 2, 200, 1, 100, 3, 13)
+    #setup(10, 1, 2, 200, 1, 100, 3, 13)
+    # np.save(os.path.join(os.getcwd(), "itemValues"), itemValues)
+    #np.save(os.path.join(os.getcwd(), "itemWeights"), itemWeights)
+    itemValues = np.load(os.path.join(os.getcwd(), "itemValues.npy"))
+    itemWeights = np.load(os.path.join(os.getcwd(), "itemWeights.npy"))
+    numberItems = itemValues.shape[1]
     knappsackWeightConstraints = np.array([[13], [17], [23], [29], [31], [37], [41], [43], [47], [53]])
-    numberRuns = 100
+    numberKnappsacks = knappsackWeightConstraints.shape[0]
+    X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
+    numberRuns = 10000
     result = np.zeros(numberRuns)
     for b in range(0, numberRuns):
         X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
         greedyAlgorithm()
-        printAll(False)
+        #printAll(False)
         result[b] = utility()
     print(result)
+    print("Max")
+    print(np.max(result))
     plt.hist(result)
+    plt.xlabel("Value for 10 knappsacks")
+    plt.ylabel("Number of times packed out of 10000 ")
     plt.show()
