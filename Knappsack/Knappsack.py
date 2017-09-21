@@ -58,8 +58,17 @@ def getIndexForMostValuableItemNotPacked():
     mostValuableItem = np.divide(itemValues, itemWeights) * xor
     return np.argmax(mostValuableItem)
 
+def getMaxWeightForItemNotPacked():
+    xor = 1 * np.logical_xor(np.sum(X, axis=0, keepdims=True), np.ones((1, numberItems), dtype=np.int))
+    maxWeight = itemWeights * xor
+    return np.argmax(maxWeight)
 
-def getIndexArrayForItemNotPackedInWeightOrder():
+def getMinWeightForItemNotPacked():
+    xor = 1 * np.logical_xor(np.sum(X, axis=0, keepdims=True), np.ones((1, numberItems), dtype=np.int))
+    minWeight = itemWeights * xor
+    return np.argmin(minWeight)
+
+def getIndexArrayForItemNotPackedInValueOrder():
     xor = 1 * np.logical_xor(np.sum(X, axis=0, keepdims=True), np.ones((1, numberItems), dtype=np.int))
     mostValuableItem = np.divide(itemValues, itemWeights) * xor
     orderArray = np.zeros(mostValuableItem.shape[1], dtype=np.int)
@@ -72,42 +81,36 @@ def getIndexArrayForItemNotPackedInWeightOrder():
         mostValuableItem[0, indexForMostValuableItem] = -1
     return orderArray
 
-def removeRandomItem():
+def rotateItems():
     done = False
-    if np.sum(X>0):
-        randomKnapsack = np.random.randint(numberKnappsacks)
-        randomItem = np.random.randint(numberItems)
-        while not done:
-            if X[randomKnapsack,randomItem]==1:
-                itemWeight = itemWeights[0, randomItem]
-                #done = True
-                # findItem from a knapsack to replace first item
+    fromPack = 0
+    itemNbr = 0
+    indexForKnapsackWithMostSpaceLeft = np.argmax(knappsackWeightConstraints - getWeightsForKnappsacks(),axis=0)[0]
+    weightLeft = knappsackWeightConstraints[indexForKnapsackWithMostSpaceLeft] - getWeightsForKnappsacks()[indexForKnapsackWithMostSpaceLeft]
+    if(weightLeft[0]>0):
+        itemsWeightInKnapsack = itemWeights * X[indexForKnapsackWithMostSpaceLeft, :]
+        itemsWeightInKnapsack = itemsWeightInKnapsack[itemsWeightInKnapsack > 0]
+        itemWeightsToSearchFor = np.unique(itemsWeightInKnapsack) # Those are the unique weights in the knapsack we want to remove from
+        itemsWeightsAllKnapsack = itemWeights * X
+        itemsWeightsAllKnapsack[indexForKnapsackWithMostSpaceLeft,:] = 0 # empty the row we are moving item from
+        for i in range(0,itemWeightsToSearchFor.shape[0]):
+            exists = np.where(itemsWeightsAllKnapsack==itemWeightsToSearchFor[i]+weightLeft) # remove exact weight Test other solutions!!
+            if (exists[0].shape[0]>0): # found at least one item to swap with
+                throwAwayFromSack = itemWeights * X
+                throwAwayFromSack = throwAwayFromSack[indexForKnapsackWithMostSpaceLeft,:]
+                removeThis = np.where( throwAwayFromSack == itemWeightsToSearchFor[i])
+                if removeThis[0].shape[0]>0:
+                    X[indexForKnapsackWithMostSpaceLeft, removeThis[0][0]] = 0 #Throw away this item
+                    X[exists[0][0], exists[1][0]] = 0 # move this item from one knapsack to
+                    X[indexForKnapsackWithMostSpaceLeft, exists[1][0]] = 1 #This knapsack
+                    fromPack = indexForKnapsackWithMostSpaceLeft
+                    itemNbr = removeThis[0][0]
+                    done = True
+                break
+    else:
+        done=False
+    return [done,fromPack,itemNbr]
 
-
-                # done = True  # crap row
-                # If another items that fits exists move that
-                # print(itemWeights*np.sum(X,axis=0))
-                shuffledIndex = np.random.permutation(numberKnappsacks) # move to random knappsack
-                for j in range(0,numberKnappsacks):
-                     if(j != randomKnapsack): # not remove from the knapsack I throw out an item from
-                         knapsackIndex = shuffledIndex[j]
-                         for k in range(0,numberItems):
-
-                             if (X[knapsackIndex,k] == 1 and X[knapsackIndex,k]*itemWeights[0,knapsackIndex]<=itemWeight):
-                                 X[randomKnapsack, randomItem] = 0 # Remove the item from all packs
-                                 printDetails("removed", randomKnapsack, randomItem)
-                                 X[knapsackIndex, k] = 0 # remove the item that will be moved from the first knapsack
-                                 printDetails("removed", knapsackIndex, k)
-                                 X[randomKnapsack, k] = 1 # Add the item to the knappsadk we removed an item from
-                                 printDetails("added", randomKnapsack, k)
-                                 print("moved: "+str(knapsackIndex)+":"+str(k)+" to "+str(randomKnapsack)+":"+str(randomItem))
-                                 done = True
-                                 break
-                         if done:
-                             break
-            randomKnapsack = np.random.randint(numberKnappsacks)
-            randomItem = np.random.randint(numberItems)
-    return done
 # Sum of value all items in knappsacks
 def utility():
     return np.sum(getValuesForKnappsacks())
@@ -123,7 +126,7 @@ def allItemsPicked():
 def printDetails(info,knappsack,item):
     itemWeight = itemWeights[0, item]
     itemValue = itemValues[0, item]
-    print(info+" weight: " + str(itemWeight) + " with value: " + str(itemValue)+" knapsack"+ str(knappsack))
+    print(info+" weight: " + str(itemWeight) + " with value: " + str(itemValue)+" knapsack "+ str(knappsack)+" value/weight: "+str(itemValue/itemWeight))
 
 def putItemInKnappsack(knappsack, itemIndex, ):
     X[knappsack, itemIndex] = 1
@@ -138,7 +141,7 @@ def plotTheItems():
         packWeights = packWeights[packWeights > 0]
         c = np.random.random(3)
         plt.scatter(packWeights, packValues, color=c)
-    indexArrayForNotPacked = getIndexArrayForItemNotPackedInWeightOrder()
+    indexArrayForNotPacked = getIndexArrayForItemNotPackedInValueOrder()
     indexes = indexArrayForNotPacked[indexArrayForNotPacked >= 0]
     restWeights = np.take(itemWeights[0, :], indexes)
     restValues = np.take(itemValues[0, :], indexes)
@@ -165,7 +168,7 @@ def printAll(verbose):
         print("Knappsacks weight left")
         print(knappsackWeightConstraints - getWeightsForKnappsacks())
         print("ItemsNotPicked")
-        indexArrayMostValuableItems = getIndexArrayForItemNotPackedInWeightOrder()
+        indexArrayMostValuableItems = getIndexArrayForItemNotPackedInValueOrder()
         s = ""
         for j in range(0, indexArrayMostValuableItems.shape[0]):
             if indexArrayMostValuableItems[j] < 0:  # All items picked
@@ -183,7 +186,7 @@ def greedyAlgorithm():
     allItemsPossibleToPackPacked = False
     i = 0
     while not allItemsPicked() and not allItemsPossibleToPackPacked:
-        indexArrayMostValuableItems = getIndexArrayForItemNotPackedInWeightOrder()
+        indexArrayMostValuableItems = getIndexArrayForItemNotPackedInValueOrder()
         for j in range(0, indexArrayMostValuableItems.shape[0]):
             if indexArrayMostValuableItems[j] < 0:  # All items picked
                 allItemsPossibleToPackPacked = True
@@ -195,37 +198,39 @@ def greedyAlgorithm():
                 break
         i = i + 1
 
-def nearestNeighborhoodSimple():
-    # Setup all
-    global numberItems, itemValues, itemWeights, knappsackWeightConstraints, X, numberKnappsacks
-    itemValues = np.load(os.path.join(os.getcwd(), "itemValues.npy"))
-    itemWeights = np.load(os.path.join(os.getcwd(), "itemWeights.npy"))
-    numberItems = itemValues.shape[1]
-    knappsackWeightConstraints = np.array([[13], [17], [23], [29], [31], [37], [41], [43], [47], [53]])
-    numberKnappsacks = knappsackWeightConstraints.shape[0]
-    X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
-    # run greedy
-    print("hepp")
+def nearestNeighborhood():
+    global numberItems, itemValues, itemWeights, knappsackWeightConstraints, X, numberKnappsacks,\
+        lastAddedknappsack,lastaddedItem
     greedyAlgorithm()
-    printAll(False)
-    # ok nearest Neigborhood
-    # remove an item
-    print("utility " + str(utility()))
-    lastValue = utility()
-    newValue = lastValue+1
-    removeRandomItem()
-    # while ( newValue > lastValue):
-    #     if(removeRandomItem()):
-    #         #greedyAlgorithm()
-    #         newValue = utility()
-    #         print(newValue)
-    #     lastValue = newValue
-    print("utility "+str(utility())+" so removed "+str(lastValue-utility()))
-        # place in a new item
-        # check if any new item fits
-        # if utility higher go back to remove
-        # remove a random item
-
+    startValue = utility()
+    breakIt = False
+    lastAddedknappsack = -1
+    lastaddedItem = -1
+    while (not breakIt):
+         remove = rotateItems()
+         if(remove[0]):
+             removedfromPack = remove[1]
+             removedItemNbr = remove[2]
+             indexForKnapsackWithMostSpaceLeft = np.argmax(knappsackWeightConstraints - getWeightsForKnappsacks(), axis=0)[0]
+             weightLeft = knappsackWeightConstraints[indexForKnapsackWithMostSpaceLeft] - getWeightsForKnappsacks()[indexForKnapsackWithMostSpaceLeft]
+             if(weightLeft[0]>0):
+                 # Fill the empty space in all knappsacks possible
+                 for k in range(0, getIndexArrayForItemNotPackedInValueOrder().shape[0]): # Dont fill in the same
+                     index = getIndexArrayForItemNotPackedInValueOrder()[k]
+                     if (index == -1): break # All packed items packed
+                     if (itemWeights[0,index] <= weightLeft):
+                         # Check so I dont add the same as I removed
+                         if (removedfromPack != lastAddedknappsack) and (removedItemNbr!=lastaddedItem):
+                            lastAddedknappsack = indexForKnapsackWithMostSpaceLeft
+                            lastaddedItem = index
+                            X[indexForKnapsackWithMostSpaceLeft,index]=1
+                            # print(" neigbourhood: "+str(utility()-startValue))
+                            break
+             else:breakIt=True #There is no space in
+         else:breakIt = True
+    greedyAlgorithm()
+    #print("Started with utility: "+ str(startValue) + " ended with : "+str(utility())+" so added value "+str(utility()-startValue))
+    return utility()-startValue
 
 
 def setup(_numberKnappsacks, _knappsacksWeightsLow, _knappsacksWeightsHigh,
@@ -252,9 +257,10 @@ print('5: Greedy Algorithm like 1 but run 100 times and plot histogram over valu
 print('6: Greedy Algorithm like 2 but run 100 times and plot histogram over values (All items fit in packs)')
 print('7: Greedy Algorithm like 3 but run 100 times and plot histogram over values')
 print('8: Greedy Algorithm run X times with a predifined set of items and same packs as in 3')
-print('9: Nearest neigbor')
-#opt = int(input('Select alternatives: '))
-opt = 9
+print('9: same as 8 but with Nearest neighborhood')
+print('10: Same as 5 but with Nearest neighborhood')
+opt = int(input('Select alternatives: '))
+#opt = 9
 if opt == 0:
     # # Value p
     setup(25, 30, 60, 1000, 1, 100, 2, 10)
@@ -355,10 +361,47 @@ if opt == 8:
     print("Max 5")
     max = np.sort(result)
     for i in range(max.shape[0]-5,max.shape[0]):
-     print(max[i])
+        print(max[i])
     plt.hist(result,numberRuns)
     plt.xlabel("Value for "+str(numberKnappsacks)+" knapsacks")
     plt.ylabel("Number of times packed out of "+str(numberRuns)+" ")
     plt.show()
+
 if opt == 9:
-    nearestNeighborhoodSimple()
+    numberRunstr = input('Select number runs (DEFAULT: 10): ')
+    numberRuns = 10
+    if numberRunstr != '': numberRuns = int(numberRunstr)
+    itemValues = np.load(os.path.join(os.getcwd(), "itemValues.npy"))
+    itemWeights = np.load(os.path.join(os.getcwd(), "itemWeights.npy"))
+    numberItems = itemValues.shape[1]
+    knappsackWeightConstraints = np.array([[13], [17], [23], [29], [31], [37], [41], [43], [47], [53]])
+    numberKnappsacks = knappsackWeightConstraints.shape[0]
+    X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
+    result = np.zeros(numberRuns)
+    betterThanGreedy = np.zeros(numberRuns)
+    for b in range(0, numberRuns):
+        X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
+        betterThanGreedy[b] = nearestNeighborhood()
+        result[b] = utility()
+    print("Neighborhood made it " + str(np.mean(betterThanGreedy)) + " mean value better over " + str(numberRuns) + " runs")
+    print("Max 5")
+    max = np.sort(result)
+    for i in range(max.shape[0] - 5, max.shape[0]):
+        print(max[i])
+    plt.hist(result, numberRuns)
+    plt.xlabel("Value for " + str(numberKnappsacks) + " knapsacks")
+    plt.ylabel("Number of times packed out of " + str(numberRuns) + " ")
+    plt.show()
+
+if opt == 10:
+    setup(5, 30, 60, 100, 1, 100, 2, 10)
+    numberRuns = 100
+    result = np.zeros(numberRuns)
+    betterThanGreedy = np.zeros(numberRuns)
+    for b in range(0, numberRuns):
+        X = np.zeros((numberKnappsacks, numberItems), dtype=np.int)
+        betterThanGreedy[b] = nearestNeighborhood()
+        result[b] = utility()
+    print("Neighborhood made it "+str(np.mean(betterThanGreedy))+" mean value better over "+str(numberRuns)+" runs")
+    plt.hist(result)
+    plt.show()
