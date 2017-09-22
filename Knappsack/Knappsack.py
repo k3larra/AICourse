@@ -403,5 +403,7 @@ if opt == 10:
         betterThanGreedy[b] = nearestNeighborhood()
         result[b] = utility()
     print("Neighborhood made it "+str(np.mean(betterThanGreedy))+" mean value better over "+str(numberRuns)+" runs")
-    plt.hist(result)
+    plt.hist(result, numberRuns)
+    plt.xlabel("Value for " + str(numberKnappsacks) + " knapsacks")
+    plt.ylabel("Number of times packed out of " + str(numberRuns) + " ")
     plt.show()
