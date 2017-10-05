@@ -394,7 +394,7 @@ if opt == 9:
     plt.show()
 
 if opt == 10:
-    setup(5, 30, 60, 100, 1, 100, 2, 10)
+    setup(50, 30, 60, 100, 1, 100, 2, 10)
     numberRuns = 100
     result = np.zeros(numberRuns)
     betterThanGreedy = np.zeros(numberRuns)
