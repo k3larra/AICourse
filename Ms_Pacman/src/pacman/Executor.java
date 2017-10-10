@@ -11,10 +11,14 @@ import java.util.EnumMap;
 import java.util.Random;
 
 import dataRecording.DataCollectorController;
+import decisiontree.Node;
+import decisiontree.SaveTree;
+import decisiontree.TrainModel;
 import pacman.controllers.Controller;
 import pacman.controllers.HumanController;
 import pacman.controllers.KeyBoardInput;
 import pacman.controllers.examples.AggressiveGhosts;
+import pacman.controllers.examples.ID3;
 import pacman.controllers.examples.Legacy;
 import pacman.controllers.examples.Legacy2TheReckoning;
 import pacman.controllers.examples.NearestPillPacMan;
@@ -66,6 +70,11 @@ public class Executor
 //		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
 //		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
 //		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
+		Node n = SaveTree.loadTree();
+		if (n != null){
+			n.printAllLowerNodes();
+			exec.runGameTimed(new ID3(n),new StarterGhosts(),visual);
+		}
 		//*/
 	
 		
