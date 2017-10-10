@@ -57,24 +57,26 @@ public class Executor
 //		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
 		 
 		
-		
+		boolean visual=true;
 		//run a game in synchronous mode: game waits until controllers respond.
-		/*int delay=5;
-		boolean visual=true;
-		exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);*/
-  		 
-		
-		///*
-		//run the game in asynchronous mode.
-		boolean visual=true;
-//		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
-//		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
-//		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
+		int delay=5;
+		//exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
 		Node n = SaveTree.loadTree();
 		if (n != null){
 			n.printAllLowerNodes();
+			exec.runGame(new ID3(n),new StarterGhosts(),visual,5);
+		} 
+		
+		///*
+		//run the game in asynchronous mode.
+		//boolean visual=true;
+//		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
+//		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
+//		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
+		/*Node n = SaveTree.loadTree();
+		if (n != null){
+			n.printAllLowerNodes();
 			exec.runGameTimed(new ID3(n),new StarterGhosts(),visual);
-		}
 		//*/
 	
 		

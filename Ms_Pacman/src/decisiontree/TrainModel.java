@@ -4,6 +4,8 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
 import dataRecording.DataSaverLoader;
 import dataRecording.DataTuple;
 import decisiontree.Constants.LABEL;
@@ -76,7 +78,7 @@ public class TrainModel {
 //		2. If every tuple in D has the same class C, return N as a leaf node labeled as C.
 		MOVE leaf = doesAllNodesHaveSameClass(d);
 		if(leaf!=null){
-			n.setAsLeafNode(leaf);
+			n.setAsLeafNode(leaf,leaf.toString());
 			System.out.println("All nodes have same class return node as: "+ n.getClassData().toString());
 			return n;
 		}else{
@@ -84,7 +86,8 @@ public class TrainModel {
 		}
 //		3. Otherwise, if the attribute list is empty, return N as a leaf node labeled with the majority class in D.
 		if(attribute_list.size()==1){
-			n.setAsLeafNode(getMajorityClass(d));
+			MOVE m = getMajorityClass(d);
+			n.setAsLeafNode(m,m.toString());
 			System.out.println("Attribute list is empty so return node in majority vote as : "+ n.getClassData().toString());
 			return n;
 		}
@@ -101,20 +104,20 @@ public class TrainModel {
 		cloneAttributeList.remove(l);
 		//3. For each value aj in attribute A:
 		System.out.println("***** split on: "+l.toString());
-		for (String string : attributeValues) {
+		for (String attributeValue : attributeValues) {
 //			a) Separate all tuples in D so that attribute A takes the value aj, creating the subset Dj.
-			String[][] dj = selectAttributeValueData(d,l,attribute_list,string);
-			System.out.println("All tuples that has: "+string+" as value.");
+			String[][] dj = selectAttributeValueData(d,l,attribute_list,attributeValue);
+			System.out.println("All tuples that has: "+attributeValue+" as value.");
 			printMatrix(dj,20,cloneAttributeList);
 //			b) If Dj is empty, add a child node to N labeled with the majority class in D.
 			if(dj.length<2){  //Only one row the class left
 				Node child = new Node();
-				child.setAsLeafNode(getMajorityClass(d));
+				child.setAsLeafNode(getMajorityClass(d),attributeValue);
 				n.addChildNode(child);
 				System.out.println("Dj is empty adding child as majority vote node the child has class: "+child.getClassData().toString());
 			}
 //			c) Otherwise, add the resulting node from calling Generate_Tree(Dj, attribute) as a child node to N.
-			n.addChildNode(generateDecisionTree(dj, cloneAttributeList, att));
+			n.addChildNodeAndAttributeValue(generateDecisionTree(dj, cloneAttributeList, att),attributeValue);
 		}	
 		//attribute_list.remove(l);
 //		4. Return N.

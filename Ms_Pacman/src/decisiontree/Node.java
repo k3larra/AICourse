@@ -11,7 +11,11 @@ import pacman.game.Constants.MOVE;
 
 public class Node implements Serializable{
 	 private LABEL labelData;
-	 private MOVE classData;
+	 private String attrValue;
+	
+
+
+	private MOVE classData;
 	 private Collection<Node> myChildren = new ArrayList<Node>();
 	 public Node() {
 	 }
@@ -40,7 +44,8 @@ public class Node implements Serializable{
 		 myChildren = children;
 	 }
 	 
-	 public void setAsLeafNode(MOVE leaf){
+	 public void setAsLeafNode(MOVE leaf,String attrValue){
+		 this.attrValue = attrValue;
 		 classData = leaf;
 	 }
 
@@ -48,16 +53,24 @@ public class Node implements Serializable{
 		labelData = l;
 		
 	}
-
+ 
 	public void addChildNode(Node child) {
 		myChildren.add(child);
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void addChildNodeAndAttributeValue(Node child, String attrValue) {
+		myChildren.add(child);
+		this.attrValue= attrValue;
+	}
+	
+	public String getAttrValue() {
+			return attrValue;
+	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "HEpp0";
 	}
 	
