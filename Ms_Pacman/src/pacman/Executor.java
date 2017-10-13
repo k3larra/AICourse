@@ -18,7 +18,7 @@ import pacman.controllers.Controller;
 import pacman.controllers.HumanController;
 import pacman.controllers.KeyBoardInput;
 import pacman.controllers.examples.AggressiveGhosts;
-import pacman.controllers.examples.ID3;
+import pacman.controllers.examples.DecisionTreePacMan;
 import pacman.controllers.examples.Legacy;
 import pacman.controllers.examples.Legacy2TheReckoning;
 import pacman.controllers.examples.NearestPillPacMan;
@@ -63,8 +63,8 @@ public class Executor
 		//exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
 		Node n = SaveTree.loadTree();
 		if (n != null){
-			n.printAllLowerNodes();
-			exec.runGame(new ID3(n),new StarterGhosts(),visual,5);
+			//n.printAllLowerNodes();
+			exec.runGame(new DecisionTreePacMan(n),new StarterGhosts(),visual,5);
 		} 
 		
 		///*
@@ -96,7 +96,7 @@ public class Executor
 */
 		
 		//run game for data collection
-		exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		//exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
 
 	}
 	

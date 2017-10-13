@@ -10,11 +10,11 @@ import pacman.controllers.Controller;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
-public class ID3 extends Controller<MOVE> {
+public class DecisionTreePacMan extends Controller<MOVE> {
 	private Random rnd=new Random();
 	private MOVE[] allMoves=MOVE.values();
 	private Node rootNode;
-	public ID3(Node rootNode) {
+	public DecisionTreePacMan(Node rootNode) {
 		this.rootNode = rootNode;
 		// TODO Auto-generated constructor stub
 	}
@@ -24,14 +24,18 @@ public class ID3 extends Controller<MOVE> {
 		// TODO Auto-generated method stub
 		//game.
 		MOVE m = getNextMoveFromDecisionTree(rootNode, game);
-		System.out.println("Move: " + m.toString());
+		if(m!=null){
+			System.out.println("Move: " + m.toString());
+		}else{
+			System.out.println("Move: NULL");
+		}
 		return allMoves[rnd.nextInt(allMoves.length)];
 		
 	}
 	
 	private MOVE getNextMoveFromDecisionTree(Node n, Game g){
 		MOVE m= null;
-		String gameValue;
+		String gameValue = "";
 		if (n.isLeafNode()){
 			m = n.getClassData();
 		}else{
@@ -39,24 +43,36 @@ public class ID3 extends Controller<MOVE> {
 			boolean foundMatch = false;
 			for (Node n2: n.getChildren()){
 				//there should always be a match between a childs value and a value from the game 
-				if ( n2.isLeafNode()){
-					m = n.getClassData();
-				}
 				String value = n2.getAttrValue();
-				if (n2.getLabelData()==null){
-					
+				if (value==null){
+					System.out.println("CRAp");
 				}
-				gameValue = getValueForLabel(g,n2.getLabelData());
-				System.out.println("This node: "+ n2.getLabelData().toString()+" value: "+ value + " gameValue "+gameValue);
-				if (value.equals(gameValue)){
-					foundMatch = true;
-					//Go down in this branch
-					m = getNextMoveFromDecisionTree(n2, g);
+				if (n2.isLeafNode()){
+					m = n.getClassData();
+					gameValue = n2.getAttrValue();
+					if (value.equals(gameValue)){
+						foundMatch = true;
+						System.out.println("This node is a LEAF: "+ n2.getLabelData().toString()+" value: "+ value + " gameValue: "+gameValue);
+					}
+				}else{
+					gameValue = getValueForLabel(g,n2.getLabelData());
+					if (value.equals(gameValue)){
+						foundMatch = true;
+						//Go down in this branch
+						System.out.println("This node found lets go deeper: "+ n2.getLabelData().toString()+" value: "+ value + " gameValue: "+gameValue);
+						m = getNextMoveFromDecisionTree(n2, g);
+					}
 				}
 			}
 			if (!foundMatch){
+				System.out.println("WAS LOOKING for: "+gameValue);
 				System.out.println("ERROR no match found");
 			}
+		}
+		if(m!=null){
+			System.out.println("Move: " + m.toString());
+		}else{
+			System.out.println("Move: NULL");
 		}
 		return m;
 	}

@@ -1,10 +1,8 @@
 package pacman;
 
-import dataRecording.DataSaverLoader;
-import dataRecording.DataTuple;
 import decisiontree.TrainModel;
 
-public class AIAssignment3 {
+public class BuildAndSaveDecisionTree {
 
 	public static void main(String[] args) {
 		//DataTuple[] tuples = DataSaverLoader.LoadPacManData();

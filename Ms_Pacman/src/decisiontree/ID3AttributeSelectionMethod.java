@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import decisiontree.Constants.LABEL;
 
-public class ID3 extends AttributeSelectionMethod {
+public class ID3AttributeSelectionMethod extends AttributeSelectionMethod {
 
 	@Override
 	public LABEL method(String[][] D, ArrayList<LABEL> attribute_list) {

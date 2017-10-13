@@ -21,6 +21,8 @@ public class TrainModel {
     private Collection<LABEL> Labels = new ArrayList<LABEL>(); 
     private String[][] tuplesAsStrings;
     public static Node rootNode; 
+    private int currentLevel;
+    private int deepestLevel;
 	/**
 	 * 
 	 */
@@ -62,8 +64,9 @@ public class TrainModel {
 //		String[][] xMatrix = selectAttributeData(tMatrix, LABEL.isPinkyEdible, attribute_list, "true");
 //		System.out.println(getMajorityClass(xMatrix).toString());
 //		printMatrix(xMatrix,5,attribute_list);
-		rootNode = generateDecisionTree(tMatrix, attribute_list, new ID3());
+		rootNode = generateDecisionTree(tMatrix, attribute_list, new ID3AttributeSelectionMethod());
 		//rootNode.printAllLowerNodes();
+		System.out.println("DeepestLevel: "+deepestLevel);
 		SaveTree.saveTree(rootNode);
 	}
 	
@@ -72,23 +75,33 @@ public class TrainModel {
 	private Node generateDecisionTree(String[][] d, ArrayList<LABEL> attribute_list, AttributeSelectionMethod att ){
 //		1: Create node N.
 		Node n = new Node();
+		currentLevel++;
+		n.setNodelevel(currentLevel);
+		if (currentLevel>deepestLevel){
+			deepestLevel = currentLevel;
+		}
 		System.out.println();
 		System.out.println("********************** Entering new node ***************************");
-		printMatrix(d,20,attribute_list);
+		//printMatrix(d,20,attribute_list);
 //		2. If every tuple in D has the same class C, return N as a leaf node labeled as C.
 		MOVE leaf = doesAllNodesHaveSameClass(d);
 		if(leaf!=null){
-			n.setAsLeafNode(leaf,leaf.toString());
-			System.out.println("All nodes have same class return node as: "+ n.getClassData().toString());
+			n.setAsLeafNode(leaf);
+			
+			System.out.println("All nodes have same class return node as: "+ n.getClassData().toString()+" : attirbute "+n.getAttrValue());
+			currentLevel--;
+			n.printNodeInfo();
 			return n;
 		}else{
 			System.out.println("The nodes does not have the same class");
 		}
 //		3. Otherwise, if the attribute list is empty, return N as a leaf node labeled with the majority class in D.
-		if(attribute_list.size()==1){
+		if(attribute_list.size()==1){  //This never happends and that is strange
 			MOVE m = getMajorityClass(d);
-			n.setAsLeafNode(m,m.toString());
-			System.out.println("Attribute list is empty so return node in majority vote as : "+ n.getClassData().toString());
+			n.setAsLeafNode(m);
+			currentLevel--;
+			System.out.println("Attribute list is empty so return node in majority vote as : "+ n.getClassData().toString() +" : attirbute "+n.getAttrValue());
+			n.printNodeInfo();
 			return n;
 		}
 //		4. Otherwise:
@@ -99,6 +112,11 @@ public class TrainModel {
 //				S(D, attribute list) -> A.
 //		2. Label N as A and remove A from the attribute list.
 		String[] attributeValues = getLabelAttributeValues(d, l, attribute_list);
+		System.out.println("Attribute to create children for node type: "+l.toString());
+		for (String string : attributeValues) {
+			System.out.print(string+" : ");
+		}
+		System.out.println();
 		n.setNodeLabel(l);
 		ArrayList<LABEL> cloneAttributeList = (ArrayList<LABEL>) attribute_list.clone(); //Remove form attributelist But keep a copy
 		cloneAttributeList.remove(l);
@@ -108,20 +126,33 @@ public class TrainModel {
 //			a) Separate all tuples in D so that attribute A takes the value aj, creating the subset Dj.
 			String[][] dj = selectAttributeValueData(d,l,attribute_list,attributeValue);
 			System.out.println("All tuples that has: "+attributeValue+" as value.");
-			printMatrix(dj,20,cloneAttributeList);
+			//printMatrix(dj,20,cloneAttributeList);
 //			b) If Dj is empty, add a child node to N labeled with the majority class in D.
-			if(dj.length<2){  //Only one row the class left
+			if(dj.length<2){  //Only one column the class column is left
 				Node child = new Node();
-				child.setAsLeafNode(getMajorityClass(d),attributeValue);
+				child.setAsLeafNode(getMajorityClass(d));
+				child.setAttributeValue(attributeValue);
+				child.setNodelevel(currentLevel+1);
+				if (currentLevel+1>deepestLevel){
+					deepestLevel = currentLevel+1;
+				}
 				n.addChildNode(child);
 				System.out.println("Dj is empty adding child as majority vote node the child has class: "+child.getClassData().toString());
-			}
+			}else{
 //			c) Otherwise, add the resulting node from calling Generate_Tree(Dj, attribute) as a child node to N.
-			n.addChildNodeAndAttributeValue(generateDecisionTree(dj, cloneAttributeList, att),attributeValue);
+				Node n3 = generateDecisionTree(dj, cloneAttributeList, att);
+				n3.setAttributeValue(attributeValue);
+				n.addChildNode(n3);
+			}
 		}	
 		//attribute_list.remove(l);
 //		4. Return N.
 		System.out.println("************** returning node labled with attribute: "+n.getLabelData()+" *******************");
+		System.out.println("CurrentLevel: "+currentLevel);
+		System.out.println("Created node with ");
+		SaveTree.saveTree(rootNode);
+		currentLevel--;
+		n.printNodeInfo();
 		return n; 
 		
 	}

@@ -12,11 +12,10 @@ import pacman.game.Constants.MOVE;
 public class Node implements Serializable{
 	 private LABEL labelData;
 	 private String attrValue;
-	
-
-
-	private MOVE classData;
+	 private int nodelevel;
+	 private MOVE classData;
 	 private Collection<Node> myChildren = new ArrayList<Node>();
+	 
 	 public Node() {
 	 }
 
@@ -44,8 +43,7 @@ public class Node implements Serializable{
 		 myChildren = children;
 	 }
 	 
-	 public void setAsLeafNode(MOVE leaf,String attrValue){
-		 this.attrValue = attrValue;
+	 public void setAsLeafNode(MOVE leaf){
 		 classData = leaf;
 	 }
 
@@ -55,9 +53,7 @@ public class Node implements Serializable{
 	}
  
 	public void addChildNode(Node child) {
-		myChildren.add(child);
-		// TODO Auto-generated method stub
-		
+		myChildren.add(child);		
 	}
 	
 	public void addChildNodeAndAttributeValue(Node child, String attrValue) {
@@ -88,6 +84,35 @@ public class Node implements Serializable{
 		}
 		
 	}
+
+	public void setAttributeValue(String attributeValue) {
+		this.attrValue = attributeValue;
+	}
+
+	public int getNodelevel() {
+		return nodelevel;
+	}
+
+	public void setNodelevel(int nodelevel) {
+		this.nodelevel = nodelevel;
+	}
+
+	public void printNodeInfo() {
+		// TODO Auto-generated method stubif (this.isLeafNode()){
+		if (this.isLeafNode()){
+			System.out.print("LEAF node: ");
+			System.out.println(this.getClassData());
+		}else{
+			System.out.print("Attribute node: ");
+			System.out.println(this.getLabelData());
+			System.out.print("Attribute values for children: ");
+			for (Node node : myChildren) {
+				System.out.print(node.getAttrValue()+ " : ");
+			}
+			System.out.println();
+		}
+	}
+	
 	
 	
 }
