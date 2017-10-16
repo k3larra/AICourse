@@ -38,10 +38,10 @@ public class TrainModel {
 		//TrainModel t = new TrainModel();
 		//String[][] sMatrix = generateStringMatrixFromDataTuple(tuples);
 		
-		ArrayList<LABEL> attribute_list = Constants.getAllLabels();
-		System.out.println("attribute_list.size()"+attribute_list.size());
-		//printMatrix(Constants.tupleMatrix,4,attribute_list);
-		//Clean none useful data
+        ArrayList<LABEL> attribute_list = Constants.getAllLabels();
+//		System.out.println("attribute_list.size()"+attribute_list.size());
+//		//printMatrix(Constants.tupleMatrix,4,attribute_list);
+//		//Clean none useful data
 		String[][] tMatrix = removeLabelData(Constants.tupleMatrix, LABEL.currentLevel, attribute_list);
 		attribute_list.remove(LABEL.currentLevel);
 		tMatrix = removeLabelData(tMatrix, LABEL.mazeIndex,attribute_list);
@@ -63,9 +63,9 @@ public class TrainModel {
 //		System.out.println(getMajorityClass(tMatrix).toString());
 //		String[][] xMatrix = selectAttributeData(tMatrix, LABEL.isPinkyEdible, attribute_list, "true");
 //		System.out.println(getMajorityClass(xMatrix).toString());
-//		printMatrix(xMatrix,5,attribute_list);
+		printMatrix(tMatrix,50,attribute_list);
 		rootNode = generateDecisionTree(tMatrix, attribute_list, new ID3AttributeSelectionMethod());
-		//rootNode.printAllLowerNodes();
+		rootNode.printAllLowerNodes();
 		System.out.println("DeepestLevel: "+deepestLevel);
 		SaveTree.saveTree(rootNode);
 	}
@@ -73,6 +73,17 @@ public class TrainModel {
 
 
 	private Node generateDecisionTree(String[][] d, ArrayList<LABEL> attribute_list, AttributeSelectionMethod att ){
+//		//THis should not be first but removing all zero gain attributes before is great!!
+		LABEL l = att.method(d, attribute_list);
+		//remove LABELS with zero gain
+		ArrayList<LABEL> labelsToRemove = att.getAttributesWithZeroGain();
+		for (LABEL label : labelsToRemove) {
+			d = removeLabelData(d, label,attribute_list);
+			attribute_list.remove(label);
+			System.out.println("Removed: "+ label.toString());
+		}
+		
+		
 //		1: Create node N.
 		Node n = new Node();
 		currentLevel++;
@@ -80,52 +91,58 @@ public class TrainModel {
 		if (currentLevel>deepestLevel){
 			deepestLevel = currentLevel;
 		}
-		System.out.println();
-		System.out.println("********************** Entering new node ***************************");
+		//System.out.println();
+		//System.out.println("********************** Entering new node ***************************");
 		//printMatrix(d,20,attribute_list);
 //		2. If every tuple in D has the same class C, return N as a leaf node labeled as C.
 		MOVE leaf = doesAllNodesHaveSameClass(d);
 		if(leaf!=null){
 			n.setAsLeafNode(leaf);
-			
-			System.out.println("All nodes have same class return node as: "+ n.getClassData().toString()+" : attirbute "+n.getAttrValue());
+			//System.out.println("All nodes have same class return node as: "+ n.getClassData().toString()+" : attirbute "+n.getAttrValue());
+			System.out.println("Nodelevel: "+currentLevel);
 			currentLevel--;
 			n.printNodeInfo();
 			return n;
 		}else{
-			System.out.println("The nodes does not have the same class");
+			//System.out.println("The nodes does not have the same class");
 		}
 //		3. Otherwise, if the attribute list is empty, return N as a leaf node labeled with the majority class in D.
 		if(attribute_list.size()==1){  //This never happends and that is strange
 			MOVE m = getMajorityClass(d);
 			n.setAsLeafNode(m);
+			System.out.println("Nodelevel: "+currentLevel);
 			currentLevel--;
-			System.out.println("Attribute list is empty so return node in majority vote as : "+ n.getClassData().toString() +" : attirbute "+n.getAttrValue());
+			System.out.println("*****TJO Attribute list is empty so return node in majority vote as : "+ n.getClassData().toString() +" : attribute "+n.getAttrValue());
 			n.printNodeInfo();
 			return n;
 		}
 //		4. Otherwise:
 			
-//		1. Call the attribute selection method on D and the attribute list, in order to choose the current attribute A:
-		LABEL l = att.method(d, attribute_list);
-		System.out.println("Selected randomly attribute to remove fake method: "+l.toString());
+		//1. Call the attribute selection method on D and the attribute list, in order to choose the current attribute A:
+//				LABEL l = att.method(d, attribute_list);
+				//remove LABELS with zero gain
+//				ArrayList<LABEL> labelsToRemove = att.getAttributesWithZeroGain();
+//				for (LABEL label : labelsToRemove) {
+//					attribute_list.remove(label);
+//					System.out.println("Removed: "+ label.toString());
+//				}
+		//System.out.println("Selected randomly attribute to remove fake method: "+l.toString());
 //				S(D, attribute list) -> A.
 //		2. Label N as A and remove A from the attribute list.
 		String[] attributeValues = getLabelAttributeValues(d, l, attribute_list);
-		System.out.println("Attribute to create children for node type: "+l.toString());
-		for (String string : attributeValues) {
-			System.out.print(string+" : ");
-		}
-		System.out.println();
+		//System.out.println("Attribute to create children for node type: "+l.toString());
+//		for (String string : attributeValues) {
+//			System.out.print(string+" : ");
+//		}
+//		System.out.println();
 		n.setNodeLabel(l);
 		ArrayList<LABEL> cloneAttributeList = (ArrayList<LABEL>) attribute_list.clone(); //Remove form attributelist But keep a copy
 		cloneAttributeList.remove(l);
 		//3. For each value aj in attribute A:
-		System.out.println("***** split on: "+l.toString());
 		for (String attributeValue : attributeValues) {
 //			a) Separate all tuples in D so that attribute A takes the value aj, creating the subset Dj.
 			String[][] dj = selectAttributeValueData(d,l,attribute_list,attributeValue);
-			System.out.println("All tuples that has: "+attributeValue+" as value.");
+			//System.out.println("All tuples that has: "+attributeValue+" as value.");
 			//printMatrix(dj,20,cloneAttributeList);
 //			b) If Dj is empty, add a child node to N labeled with the majority class in D.
 			if(dj.length<2){  //Only one column the class column is left
@@ -137,9 +154,10 @@ public class TrainModel {
 					deepestLevel = currentLevel+1;
 				}
 				n.addChildNode(child);
-				System.out.println("Dj is empty adding child as majority vote node the child has class: "+child.getClassData().toString());
+				//System.out.println("Dj is empty adding child as majority vote node the child has class: "+child.getClassData().toString());
 			}else{
 //			c) Otherwise, add the resulting node from calling Generate_Tree(Dj, attribute) as a child node to N.
+				//remove all attributes with zero gain.
 				Node n3 = generateDecisionTree(dj, cloneAttributeList, att);
 				n3.setAttributeValue(attributeValue);
 				n.addChildNode(n3);
@@ -147,12 +165,12 @@ public class TrainModel {
 		}	
 		//attribute_list.remove(l);
 //		4. Return N.
-		System.out.println("************** returning node labled with attribute: "+n.getLabelData()+" *******************");
-		System.out.println("CurrentLevel: "+currentLevel);
-		System.out.println("Created node with ");
-		SaveTree.saveTree(rootNode);
-		currentLevel--;
+		//System.out.println("************** returning node labled with attribute: "+n.getLabelData()+" *******************");
+		//System.out.println("CurrentLevel: "+currentLevel);
+		//System.out.println("Created node with ");
+		System.out.println("Nodelevel: "+currentLevel);
 		n.printNodeInfo();
+		currentLevel--;
 		return n; 
 		
 	}
@@ -204,7 +222,6 @@ public class TrainModel {
 				rows++;
 			}
 		}
-		System.out.println("rows: " +rows);
 		if (column>-1&&tuplesAsStrings!=null){
 				result = new String[tuplesAsStrings.length][rows];
 	//			System.out.println("result cols: "+ result.length+" result rows: "+ result[0].length);
@@ -303,116 +320,116 @@ public class TrainModel {
 	    return java.util.Arrays.stream(matrix).map(el -> el.clone()).toArray($ -> matrix.clone());
 	}
 	
-	private  String[][] generateStringMatrixFromDataTuple(DataTuple[] tuples){
-//		System.out.println(LABEL.valueOf("blinkyDir").ordinal());
-//		LABEL[] l= LABEL.values();
-		String[][] all = new String[LABEL.values().length][tuples.length];
-//		for (int i = 0; i<LABEL.values().length;i++){
-//			all[i][0] = LABEL.values()[i].toString();
+//	private  String[][] generateStringMatrixFromDataTuple(DataTuple[] tuples){
+////		System.out.println(LABEL.valueOf("blinkyDir").ordinal());
+////		LABEL[] l= LABEL.values();
+//		String[][] all = new String[LABEL.values().length][tuples.length];
+////		for (int i = 0; i<LABEL.values().length;i++){
+////			all[i][0] = LABEL.values()[i].toString();
+////		}
+////		System.out.println("all[0][70]"+all[0][70]);
+////		System.out.println(tuples[70].DirectionChosen.toString());
+//		for (int i=0; i<all.length; i++ ){
+//			for (int j = 0; j<all[0].length;j++){
+//			  switch (i) {
+//				case 0:
+//					 all[i][j] = tuples[j].DirectionChosen.toString();
+//					break;
+//				case 1:
+//					all[i][j] = String.valueOf(tuples[j].mazeIndex);
+//					break;
+//				case 2:
+//					all[i][j] = String.valueOf(tuples[j].currentLevel);
+//					break;
+//				case 3:
+//					all[i][j] = tuples[j].discretizePosition(tuples[j].pacmanPosition).toString();
+//					break;
+//				case 4:
+//					all[i][j] = String.valueOf(tuples[j].pacmanLivesLeft);
+//					break;
+//				case 5:
+//					all[i][j] = tuples[j].discretizeCurrentScore(tuples[j].currentScore).toString();
+//					break;
+//				case 6:
+//					all[i][j] = tuples[j].discretizeTotalGameTime(tuples[j].totalGameTime).toString();
+//					break;
+//				case 7:
+//					all[i][j] = tuples[j].discretizeCurrentLevelTime(tuples[j].currentLevelTime).toString();
+//					break;
+//				case 8:
+//					all[i][j] = tuples[j].discretizeNumberOfPills(tuples[j].numOfPillsLeft).toString();
+//					break;
+//				case 9:
+//					all[i][j] = tuples[j].discretizeNumberOfPowerPills(tuples[j].numOfPowerPillsLeft).toString();
+//					break;
+//				case 10:
+//					all[i][j] = String.valueOf(tuples[j].isBlinkyEdible);
+//					break;
+//				case 11:
+//					all[i][j] = String.valueOf(tuples[j].isInkyEdible);
+//					break;
+//				case 12:
+//					all[i][j] = String.valueOf(tuples[j].isPinkyEdible);
+//					break;
+//				case 13:
+//					all[i][j] = String.valueOf(tuples[j].isSueEdible);
+//					break;
+//				case 14:
+//					all[i][j] = tuples[j].discretizeDistance(tuples[j].blinkyDist).toString();
+//					break;
+//				case 15:
+//					all[i][j] = tuples[j].discretizeDistance(tuples[j].inkyDist).toString();
+//					break;
+//				case 16:
+//					all[i][j] = tuples[j].discretizeDistance(tuples[j].pinkyDist).toString();
+//					break;
+//				case 17:
+//					all[i][j] = tuples[j].discretizeDistance(tuples[j].sueDist).toString();
+//					break;
+//				case 18:
+//					all[i][j] = tuples[j].blinkyDir.toString();
+//					break;
+//				case 19:
+//					all[i][j] = tuples[j].inkyDir.toString();
+//					break;
+//				case 20:
+//					all[i][j] = tuples[j].pinkyDir.toString();
+//					break;
+//				case 21:
+//					all[i][j] = tuples[j].sueDir.toString();
+//					break;
+//				case 22:
+//					all[i][j] =  String.valueOf(tuples[j].numberOfNodesInLevel);
+//					break;
+//				case 23:
+//					all[i][j] =  String.valueOf(tuples[j].numberOfTotalPillsInLevel);
+//					break;
+//				case 24:
+//					all[i][j] =  String.valueOf(tuples[j].numberOfTotalPowerPillsInLevel);
+//					break;
+//				default:
+//					all[i][j] = "las: "+i+":"+j;
+//					break;
+//				}
+//			 
+//			}
 //		}
-//		System.out.println("all[0][70]"+all[0][70]);
-//		System.out.println(tuples[70].DirectionChosen.toString());
-		for (int i=0; i<all.length; i++ ){
-			for (int j = 0; j<all[0].length;j++){
-			  switch (i) {
-				case 0:
-					 all[i][j] = tuples[j].DirectionChosen.toString();
-					break;
-				case 1:
-					all[i][j] = String.valueOf(tuples[j].mazeIndex);
-					break;
-				case 2:
-					all[i][j] = String.valueOf(tuples[j].currentLevel);
-					break;
-				case 3:
-					all[i][j] = tuples[j].discretizePosition(tuples[j].pacmanPosition).toString();
-					break;
-				case 4:
-					all[i][j] = String.valueOf(tuples[j].pacmanLivesLeft);
-					break;
-				case 5:
-					all[i][j] = tuples[j].discretizeCurrentScore(tuples[j].currentScore).toString();
-					break;
-				case 6:
-					all[i][j] = tuples[j].discretizeTotalGameTime(tuples[j].totalGameTime).toString();
-					break;
-				case 7:
-					all[i][j] = tuples[j].discretizeCurrentLevelTime(tuples[j].currentLevelTime).toString();
-					break;
-				case 8:
-					all[i][j] = tuples[j].discretizeNumberOfPills(tuples[j].numOfPillsLeft).toString();
-					break;
-				case 9:
-					all[i][j] = tuples[j].discretizeNumberOfPowerPills(tuples[j].numOfPowerPillsLeft).toString();
-					break;
-				case 10:
-					all[i][j] = String.valueOf(tuples[j].isBlinkyEdible);
-					break;
-				case 11:
-					all[i][j] = String.valueOf(tuples[j].isInkyEdible);
-					break;
-				case 12:
-					all[i][j] = String.valueOf(tuples[j].isPinkyEdible);
-					break;
-				case 13:
-					all[i][j] = String.valueOf(tuples[j].isSueEdible);
-					break;
-				case 14:
-					all[i][j] = tuples[j].discretizeDistance(tuples[j].blinkyDist).toString();
-					break;
-				case 15:
-					all[i][j] = tuples[j].discretizeDistance(tuples[j].inkyDist).toString();
-					break;
-				case 16:
-					all[i][j] = tuples[j].discretizeDistance(tuples[j].pinkyDist).toString();
-					break;
-				case 17:
-					all[i][j] = tuples[j].discretizeDistance(tuples[j].sueDist).toString();
-					break;
-				case 18:
-					all[i][j] = tuples[j].blinkyDir.toString();
-					break;
-				case 19:
-					all[i][j] = tuples[j].inkyDir.toString();
-					break;
-				case 20:
-					all[i][j] = tuples[j].pinkyDir.toString();
-					break;
-				case 21:
-					all[i][j] = tuples[j].sueDir.toString();
-					break;
-				case 22:
-					all[i][j] =  String.valueOf(tuples[j].numberOfNodesInLevel);
-					break;
-				case 23:
-					all[i][j] =  String.valueOf(tuples[j].numberOfTotalPillsInLevel);
-					break;
-				case 24:
-					all[i][j] =  String.valueOf(tuples[j].numberOfTotalPowerPillsInLevel);
-					break;
-				default:
-					all[i][j] = "las: "+i+":"+j;
-					break;
-				}
-			 
-			}
-		}
-		//all[0]
-
-		return all;
-	}
+//		//all[0]
+//
+//		return all;
+//	}
 	
 	private void printMatrix(String[][] stringMatrix,int rowsToPrint, ArrayList<LABEL> attribute_list ){
 		if(stringMatrix==null){
 			System.out.println("Oups empty matrix");
 		}else{
-			System.out.println("cols: "+ stringMatrix.length+" rows: "+ stringMatrix[0].length);
+			//System.out.println("cols: "+ stringMatrix.length+" rows: "+ stringMatrix[0].length);
 			String fillout="";
 			int k=0;
 			if (stringMatrix[0].length<rowsToPrint){
 				rowsToPrint = stringMatrix[0].length;
 			}
-			System.out.println("rowsToPrint: "+rowsToPrint);
+			//System.out.println("rowsToPrint: "+rowsToPrint);
 			//Print headlines
 			for (int i= 0; i<attribute_list.size();i++){
 				System.out.print(attribute_list.get(i).toString()+"|");

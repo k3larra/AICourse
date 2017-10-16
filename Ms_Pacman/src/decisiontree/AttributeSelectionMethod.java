@@ -6,4 +6,5 @@ import decisiontree.Constants.LABEL;
 
 public abstract class AttributeSelectionMethod {
 	public abstract LABEL method(String[][] D, ArrayList<LABEL> attribute_list);
+	public abstract ArrayList<LABEL> getAttributesWithZeroGain();
 }

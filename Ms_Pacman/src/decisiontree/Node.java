@@ -75,9 +75,22 @@ public class Node implements Serializable{
 		if (this.isLeafNode()){
 			System.out.print("|Class: ");
 			System.out.println(this.getClassData());
+			System.out.print("|My attribute value: ");
+			System.out.println(this.getAttrValue());
+			System.out.print("|My node Level: ");
+			System.out.println(this.getNodelevel());
 		}else{
 			System.out.print("|Attribute: ");
 			System.out.println(this.getLabelData());
+			System.out.print("|My attribute value: ");
+			System.out.println(this.getAttrValue());
+			System.out.print("|My node Level: ");
+			System.out.println(this.getNodelevel());
+			System.out.println("Attribute values for children there are: "+myChildren.size()+ " children.");
+			for (Node node : myChildren) {
+				 System.out.print(node.getAttrValue()+ " : ");
+			}
+			System.out.println();
 			for (Node node : myChildren) {
 				node.printAllLowerNodes();
 			}
@@ -100,17 +113,17 @@ public class Node implements Serializable{
 	public void printNodeInfo() {
 		// TODO Auto-generated method stubif (this.isLeafNode()){
 		if (this.isLeafNode()){
-			System.out.print("LEAF node: ");
-			System.out.println(this.getClassData());
+			System.out.print("***LEAF node: ");
+			System.out.print(this.getClassData());
 		}else{
-			System.out.print("Attribute node: ");
-			System.out.println(this.getLabelData());
-			System.out.print("Attribute values for children: ");
+			System.out.print("**Attribute node: ");
+			System.out.print(this.getLabelData());
+			System.out.print(" Attribute values for children: ");
 			for (Node node : myChildren) {
 				System.out.print(node.getAttrValue()+ " : ");
 			}
-			System.out.println();
 		}
+		System.out.println("**");
 	}
 	
 	

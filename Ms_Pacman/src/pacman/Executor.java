@@ -56,48 +56,43 @@ public class Executor
 		int numTrials=10;
 //		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
 		 
-		
 		boolean visual=true;
 		//run a game in synchronous mode: game waits until controllers respond.
 		int delay=5;
 		//exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
 		Node n = SaveTree.loadTree();
 		if (n != null){
-			//n.printAllLowerNodes();
+			n.printAllLowerNodes();
 			exec.runGame(new DecisionTreePacMan(n),new StarterGhosts(),visual,5);
 		} 
-		
+
 		///*
 		//run the game in asynchronous mode.
 		//boolean visual=true;
 //		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
 //		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
 //		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
-		/*Node n = SaveTree.loadTree();
-		if (n != null){
-			n.printAllLowerNodes();
-			exec.runGameTimed(new ID3(n),new StarterGhosts(),visual);
-		//*/
-	
+
 		
 		//run the game in asynchronous mode but advance as soon as both controllers are ready  - this is the mode of the competition.
 		//time limit of DELAY ms still applies.
-		/*visual=true;
+		/*boolean visual=true;
 		boolean fixedTime=false;
-		exec.runGameTimedSpeedOptimised(new RandomPacMan(),new RandomGhosts(),fixedTime,visual);
-		*/
+		exec.runGameTimedSpeedOptimised(new RandomPacMan(),new RandomGhosts(),fixedTime,visual);*/
+		
 		
 
 		//run game in asynchronous mode and record it to file for replay at a later stage.
 		/*boolean visual=true;
 		String fileName="replay.txt";
-		//exec.runGameTimedRecorded(new HumanController(new KeyBoardInput()),new RandomGhosts(),visual,fileName);
-		exec.replayGame(fileName,visual);
-*/
-		
-		//run game for data collection
-		//exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		exec.runGameTimedRecorded(new HumanController(new KeyBoardInput()),new RandomGhosts(),visual,fileName);*/
+		//exec.replayGame(fileName,visual);
 
+		
+		//LH run game for data collection
+		//boolean visual=true;
+		//exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		
 	}
 	
     /**
