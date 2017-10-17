@@ -74,6 +74,9 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 				}
 			}
 		}
+		if (m==null){
+			int a=3;
+		}
 		if (!foundMatch){
 			//System.out.println("WAS LOOKING leaf with: "+attrValueForChild);
 		}else{
@@ -155,5 +158,36 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 		}
 		return actValueForAttribute;
 	}
-
 }
+  /*
+   * • Maze m = game.getCurrentMaze(); returns the current maze.
+• Node[] graph = m.graph; returns all the nodes in the current maze as a Node array.
+• intpacmanPos= game.getPacmanCurrentNodeIndex(); returns the index of Pacman’s current node.
+• int[] activePills=game.getActivePillsIndices(); returns the indices for all the nodes containing pills.
+• int[] activePowerPills=game.getActivePowerPillsIndices(); returns the índices for all the nodes containing
+power pills.
+• public int getShortestPathDistance(int fromNodeIndex, int toNodeIndex); returns the shortest distances
+from “fromNodeIndex” to “toNodeIndex”.
+7
+
+game.getNextMoveTowardsTarget(int fromNodeIndex,int toNodeIndex,DM distanceMeasure); returns
+the move to the next node in the way from “fromNodeIndex” to “toNodeIndex”, following one of the
+implemented distance measures: {PATH, EUCLID, MANHATTAN}.
+• getNextMoveAwayFromTarget(int fromNodeIndex, int toNodeIndex, DM distanceMeasure); returns the
+opposite move to the previous one.
+• int getGhostCurrentNodeIndex(GHOST ghostType); return the index for the node where “ghostType” is,
+where “ghostType” can be: {BLINKY, PINKY, INKY, SUE}.
+• int getGhostEdibleTime(GHOST ghostType); returns for how long “ghostType” will still be edible.
+• int getGhostLairTime(GHOST ghostType); returns for how long will “ghostType” be trapped inside the lair.
+*/
+  /*
+   * 7• A valid controller inputs the current game state at time t, and returns one of the following
+commands for each of the ghosts: UP, LEFT, RIGHT, DOWN o NEUTRAL. Each ghost will make its
+corresponding move at t+1.
+• A controller is a class that implements the interface Controller<EnumMap<GHOST,MOVE>>, and
+overrides getMove.
+• getMove returns an EnumMap<GHOST,MOVE>, i. e., a list that contains a move (UP, LEFT, RIGHT,
+DOWN, NEUTRAL) for each of the ghosts.
+• getMove is a callback called automatically by the game at every time t.
+   */
+

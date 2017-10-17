@@ -42,6 +42,7 @@ public class TrainModel {
 //		System.out.println("attribute_list.size()"+attribute_list.size());
 //		//printMatrix(Constants.tupleMatrix,4,attribute_list);
 //		//Clean none useful data
+        printMatrix(Constants.tupleMatrix,50,attribute_list);
 		String[][] tMatrix = removeLabelData(Constants.tupleMatrix, LABEL.currentLevel, attribute_list);
 		attribute_list.remove(LABEL.currentLevel);
 		tMatrix = removeLabelData(tMatrix, LABEL.mazeIndex,attribute_list);
@@ -76,14 +77,16 @@ public class TrainModel {
 //		//THis should not be first but removing all zero gain attributes before is great!!
 		LABEL l = att.method(d, attribute_list);
 		//remove LABELS with zero gain
-		ArrayList<LABEL> labelsToRemove = att.getAttributesWithZeroGain();
+		System.out.println("BEfore");
+		printMatrix(d, 20, attribute_list);
+		/*ArrayList<LABEL> labelsToRemove = att.getAttributesWithZeroGain();
 		for (LABEL label : labelsToRemove) {
 			d = removeLabelData(d, label,attribute_list);
 			attribute_list.remove(label);
 			System.out.println("Removed: "+ label.toString());
 		}
-		
-		
+		System.out.println("After");
+		printMatrix(d, 20, attribute_list);*/
 //		1: Create node N.
 		Node n = new Node();
 		currentLevel++;
