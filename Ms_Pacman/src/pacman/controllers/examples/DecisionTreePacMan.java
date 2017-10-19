@@ -3,10 +3,12 @@ package pacman.controllers.examples;
 import java.util.Random;
 
 import dataRecording.DataTuple;
+import dataRecording.DataTuple.DiscreteTag;
 import decisiontree.Node;
 import decisiontree.TrainModel;
 import decisiontree.Constants.LABEL;
 import pacman.controllers.Controller;
+import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
@@ -18,13 +20,10 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 	int othermoves =0;
 	public DecisionTreePacMan(Node rootNode) {
 		this.rootNode = rootNode;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public MOVE getMove(Game game, long timeDue) {
-		// TODO Auto-generated method stub
-		//game.
 		MOVE m = getNextMoveFromDecisionTree(rootNode, game);
 		if(m!=null){
 			othermoves++;
@@ -51,10 +50,12 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 			n.printNodeInfo();
 		}
 		//n.printNodeInfo();
-		//Value for current node.
+		//Value for current node.}
 		String gameAttrValueForCurrentNode = getValueForLabel(g, n.getLabelData());
 		//Get my children
-		
+		if (gameAttrValueForCurrentNode==null){
+			return null;
+		}
 		boolean foundMatch = false;
 		for (Node n2: n.getChildren()){
 			//String value = n2.getAttrValue();
@@ -88,10 +89,11 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 
 	
 	private  String getValueForLabel(Game g, LABEL attribute ){
-		String actValueForAttribute ="";
+		String actValueForAttribute =null;
 		DataTuple d = new DataTuple(g,MOVE.NEUTRAL);  //Scrap the move
 		if (attribute==null){
 			System.out.println("Tjong");
+			return actValueForAttribute;
 		}
 		switch (attribute) {
 				case pacmanPosition:
@@ -159,6 +161,8 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 		return actValueForAttribute;
 	}
 }
+
+
   /*
    * • Maze m = game.getCurrentMaze(); returns the current maze.
 • Node[] graph = m.graph; returns all the nodes in the current maze as a Node array.

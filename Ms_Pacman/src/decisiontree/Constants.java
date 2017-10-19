@@ -7,6 +7,7 @@ import java.util.List;
 import dataRecording.DataSaverLoader;
 import dataRecording.DataTuple;
 import decisiontree.Constants.LABEL;
+import pacman.game.Constants.MOVE;
 
 public class Constants {
 	public static enum LABEL {DirectionChosen, mazeIndex, currentLevel,pacmanPosition,pacmanLivesLeft,currentScore,totalGameTime,currentLevelTime,numOfPillsLeft,numOfPowerPillsLeft,
@@ -20,8 +21,16 @@ public class Constants {
 		return new ArrayList<LABEL>(Arrays.asList(LABEL.values()));
 	}
 
-	public static final String[][] tupleMatrix = generateStringMatrixFromDataTuple(DataSaverLoader.LoadPacManData());
+	public enum STRATEGY 
+	{
+		ATTACK,	
+		RUN, 	
+		EAT_PILLS,		
+		EAT_POWER_PILLS, NOSTRATEGY		
+	};
 	
+	public static final String[][] tupleMatrix = generateStringMatrixFromDataTuple(DataSaverLoader.LoadPacManData());
+	public static final String[][] testMatrix = generateStringMatrixFromDataTuple(DataSaverLoader.LoadPacManTestData());
 	private static String[][] generateStringMatrixFromDataTuple(DataTuple[] tuples){
 //		System.out.println(LABEL.valueOf("blinkyDir").ordinal());
 //		LABEL[] l= LABEL.values();
@@ -120,25 +129,4 @@ public class Constants {
 
 		return all;
 	}
-	/*ArrayList<LABEL> a = new ArrayList<LABEL>();
-	a.add(LABEL.DirectionChosen);
-	a.add(LABEL.pacmanPosition);
-	a.add(LABEL.pacmanLivesLeft);
-	a.add(LABEL.currentScore);
-	a.add(LABEL.totalGameTime);
-	a.add(LABEL.currentLevelTime);
-	a.add(LABEL.numOfPillsLeft);
-	a.add(LABEL.numOfPowerPillsLeft);
-	a.add(LABEL.isBlinkyEdible);
-	a.add(LABEL.isInkyEdible);
-	a.add(LABEL.isPinkyEdible);
-	a.add(LABEL.isSueEdible);
-	a.add(LABEL.blinkyDist);
-	a.add(LABEL.inkyDist);
-	a.add(LABEL.pinkyDist);
-	a.add(LABEL.sueDist);
-	a.add(LABEL.blinkyDir);
-	a.add(LABEL.inkyDir);
-	a.add(LABEL.pinkyDir);
-	a.add(LABEL.sueDir);*/
 }

@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import dataRecording.DataTuple;
 import decisiontree.Constants.LABEL;
 import decisiontree.Constants.LEAF;
 import pacman.game.Constants.MOVE;
 
+@IgnoreExtraProperties
 public class Node implements Serializable{
 	 private LABEL labelData;
 	 private String attrValue;

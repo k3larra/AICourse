@@ -11,6 +11,8 @@ import pacman.game.util.*;
 public class DataSaverLoader {
 	
 	private static String FileName = "trainingData.txt";
+	private static String TestFileName = "testData.txt";
+	//private static String FileName = "trainingData2.txt";
 	
 	public static void SavePacManData(DataTuple data)
 	{
@@ -20,6 +22,20 @@ public class DataSaverLoader {
 	public static DataTuple[] LoadPacManData()
 	{
 		String data = IO.loadFile(FileName);
+		String[] dataLine = data.split("\n");
+		DataTuple[] dataTuples = new DataTuple[dataLine.length];
+		
+		for(int i = 0; i < dataLine.length; i++)
+		{
+			dataTuples[i] = new DataTuple(dataLine[i]);
+		}
+		
+		return dataTuples;
+	}
+	
+	public static DataTuple[] LoadPacManTestData()
+	{
+		String data = IO.loadFile(TestFileName);
 		String[] dataLine = data.split("\n");
 		DataTuple[] dataTuples = new DataTuple[dataLine.length];
 		
