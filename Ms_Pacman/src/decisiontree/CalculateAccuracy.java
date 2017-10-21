@@ -3,6 +3,7 @@ package decisiontree;
 import java.util.ArrayList;
 
 import decisiontree.Constants.LABEL;
+import decisiontree.Constants.STRATEGY;
 import pacman.game.Constants.MOVE;
 
 public class CalculateAccuracy {
@@ -19,21 +20,21 @@ public class CalculateAccuracy {
 	public double getAccuracy(){
 		String[] row;
 		int hits = 0;
-		int inkyColumn = attribute_list.indexOf(LABEL.inkyDist);
-		int blinkyColumn = attribute_list.indexOf(LABEL.blinkyDist);
-		int pinkyColumn = attribute_list.indexOf(LABEL.pinkyDist);
-		int sueColumn = attribute_list.indexOf(LABEL.sueDist);
 		for (int i = 0; i<testSet[0].length;i++){
 			row = new String[testSet.length];
 			for (int j = 0; j <testSet.length; j++){
 				row[j]=testSet[j][i];
 			}
-			MOVE m = getMove(tree,row);
+			STRATEGY m = getMove(tree,row);
 			if (m!=null){
-				//find closest Ghost
-				
 				if((row[0]).equals(m.toString())){
 					hits++;
+				}else{
+					System.out.println("row wrongly categorized got: "+m.toString() + " was "+row[0]);
+					for (String s : row) {
+						System.out.print(s+" | ");
+					}
+					System.out.println();
 				}
 			}
 		}
@@ -42,8 +43,8 @@ public class CalculateAccuracy {
 		return result = (double)resultInt/100;
 	}
 	
-	private MOVE getMove(Node n,String[] row){
-		MOVE m=null;
+	private STRATEGY getMove(Node n,String[] row){
+		STRATEGY m=null;
 		if(n.isLeafNode()){
 			m=n.getClassData();
 		}else{

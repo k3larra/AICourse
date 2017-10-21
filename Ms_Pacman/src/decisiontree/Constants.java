@@ -26,7 +26,8 @@ public class Constants {
 		ATTACK,	
 		RUN, 	
 		EAT_PILLS,		
-		EAT_POWER_PILLS, NOSTRATEGY		
+		EAT_POWER_PILLS, 
+		NOSTRATEGY		
 	};
 	
 	public static final String[][] tupleMatrix = generateStringMatrixFromDataTuple(DataSaverLoader.LoadPacManData());

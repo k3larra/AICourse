@@ -7,7 +7,9 @@ import dataRecording.DataTuple.DiscreteTag;
 import decisiontree.Node;
 import decisiontree.TrainModel;
 import decisiontree.Constants.LABEL;
+import decisiontree.Constants.STRATEGY;
 import pacman.controllers.Controller;
+import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
@@ -24,26 +26,79 @@ public class DecisionTreePacMan extends Controller<MOVE> {
 	
 	@Override
 	public MOVE getMove(Game game, long timeDue) {
-		MOVE m = getNextMoveFromDecisionTree(rootNode, game);
-		if(m!=null){
+		STRATEGY strategy = getNextMoveFromDecisionTree(rootNode, game);
+		if(strategy!=null){
 			othermoves++;
-			System.out.println("Move: " + m.toString());
+			System.out.println("Strategy: " + strategy.toString());
 		}else{
 			nullmoves++;
-			System.out.println("Move: NULL");
+			System.out.println("Strategy: NULL");
 		}
-		System.out.println("Nullmoves: "+nullmoves+" othermoves: "+ othermoves);
-		if (m!=null){
-			return m;
-		}else{
-			//return allMoves[rnd.nextInt(allMoves.length)];
-			return MOVE.NEUTRAL;
+		MOVE m = MOVE.NEUTRAL;
+		switch (strategy) {
+		case ATTACK:
+			m=game.getNextMoveTowardsTarget(game.getPacmanCurrentNodeIndex(),game.getGhostCurrentNodeIndex(getClosestGhost(game)),DM.MANHATTAN);
+			break;
+		case EAT_PILLS:
+			m=game.getNextMoveTowardsTarget(game.getPacmanCurrentNodeIndex(),getClosestPowerPill(game),DM.MANHATTAN);
+			break;
+		case EAT_POWER_PILLS:
+			m=game.getNextMoveTowardsTarget(game.getPacmanCurrentNodeIndex(),getClosestPowerPill(game),DM.MANHATTAN);
+			break;
+		case RUN:
+			GHOST ghost = getClosestGhost(game);
+			m=game.getApproximateNextMoveTowardsTarget(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(getClosestGhost(game)), 
+			 game.getPacmanLastMoveMade(), DM.MANHATTAN);
+			break;
+		case NOSTRATEGY:
+			MOVE[] mArray = game.getPossibleMoves(game.getPacmanCurrentNodeIndex());
+			m =  mArray[rnd.nextInt(mArray.length)];
+			break;
+		default:
+			MOVE[] mArray2 = game.getPossibleMoves(game.getPacmanCurrentNodeIndex());
+			m =  mArray2[rnd.nextInt(mArray2.length)];
+			break;
 		}
-		
+		return m;
 	}
 	
-	private MOVE getNextMoveFromDecisionTree(Node n, Game g){
-		MOVE m= null;
+	private GHOST getClosestGhost(Game game){
+		//Closest ghost
+		double dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.BLINKY),DM.MANHATTAN);
+		GHOST ghost = GHOST.BLINKY;
+		if (game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.INKY),DM.MANHATTAN)<dist){
+			dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.INKY),DM.MANHATTAN);
+			ghost = GHOST.INKY;
+		}
+		if (game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.PINKY),DM.MANHATTAN)<dist){
+			dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.PINKY),DM.MANHATTAN);
+			ghost = GHOST.PINKY;
+		}
+		if (game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.SUE),DM.MANHATTAN)<dist){
+			dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.SUE),DM.MANHATTAN);
+			ghost = GHOST.SUE;
+		}
+		return ghost;
+	}
+	
+	private int getClosestPowerPill(Game game){
+		//Closest ghost
+		int index = -1;
+		double distance = Double.MAX_VALUE;
+		int[] indecies = game.getPowerPillIndices();
+		for (int i : indecies) {
+			if (game.getDistance(game.getPacmanCurrentNodeIndex(),i,DM.MANHATTAN)<distance){
+				index = i;
+			}
+		}
+
+		return 0;
+	}
+	
+	
+	
+	private STRATEGY getNextMoveFromDecisionTree(Node n, Game g){
+		STRATEGY m= null;
 		String attrValueForChild = "";
 		if (n.getLabelData()==null){
 			System.out.println("***********LabelData NUll");
