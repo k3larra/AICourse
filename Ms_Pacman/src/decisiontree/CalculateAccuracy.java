@@ -30,11 +30,11 @@ public class CalculateAccuracy {
 				if((row[0]).equals(m.toString())){
 					hits++;
 				}else{
-					System.out.println("row wrongly categorized got: "+m.toString() + " was "+row[0]);
-					for (String s : row) {
-						System.out.print(s+" | ");
-					}
-					System.out.println();
+//					System.out.println("row wrongly categorized got: "+m.toString() + " was "+row[0]);
+//					for (String s : row) {
+//						System.out.print(s+" | ");
+//					}
+//					System.out.println();
 				}
 			}
 		}

@@ -48,7 +48,11 @@ public class ID3AttributeSelectionMethod extends AttributeSelectionMethod {
 		}
 		if(outputInfo){
 			for(int j=0; j<attribute_list.size(); j++){
-				System.out.println("Attribute: "+attribute_list.get(j).name()+ " has gain: "+info_req_for_attribute[j]);
+				String s = attribute_list.get(j).name();
+				if (s.equals("DirectionChosen")){
+					s="StrategyClass";
+				}
+				System.out.println("Attribute: "+s+ " has gain: "+info_req_for_attribute[j]);
 			}
 		}
 		int indexForMAx= getIndexForMaxValueExcludePositionZero(info_req_for_attribute);

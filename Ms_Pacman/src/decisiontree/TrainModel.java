@@ -1,8 +1,21 @@
 package decisiontree;
 
 import java.awt.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
@@ -23,6 +36,8 @@ public class TrainModel {
     private int currentLevel;
     private int deepestLevel;
 	private int nodeCount;
+	private double[] learningRate;
+	private int[] numberTuples;
 	/**
 	 * 
 	 */
@@ -31,13 +46,14 @@ public class TrainModel {
         //Run a test on Gain on top level for the dataset.
         String[][] tMatrix = Constants.tupleMatrix;
         tMatrix = addStrategyClass(tMatrix,attribute_list);
-		printMatrix(tMatrix,5,attribute_list);
-		for (String string : getLabelAttributeValues(tMatrix, LABEL.DirectionChosen, attribute_list)) {
+		//printMatrix(tMatrix,5,attribute_list);
+		/*for (String string : getLabelAttributeValues(tMatrix, LABEL.DirectionChosen, attribute_list)) {
 			System.out.println("LABEL.DirectionChosen: "+string);
 		}
         printMatrix(tMatrix,5,attribute_list);
         new ID3AttributeSelectionMethod(true).method(tMatrix, attribute_list);
         System.out.println();
+        */
         //Build Decision Tree
 		tMatrix = removeLabelData(tMatrix, LABEL.currentLevel, attribute_list);
 		attribute_list.remove(LABEL.currentLevel);
@@ -73,61 +89,235 @@ public class TrainModel {
 		attribute_list.remove(LABEL.numberOfTotalPowerPillsInLevel);
 		//remove all rows that are distant....
 		printMatrix(tMatrix,5,attribute_list);
+		/*
 		for (String string : getLabelAttributeValues(tMatrix, LABEL.DirectionChosen, attribute_list)) {
 			System.out.println("LABEL.DirectionChosen: "+string);
 		}
-		System.out.println("Attribute gain for test set containing "+ tMatrix[0].length+" rows." );
+		System.out.println("Attribute gain for training set containing "+ tMatrix[0].length+" rows." );
 		new ID3AttributeSelectionMethod(true).method(tMatrix, attribute_list);
 		printMatrix(tMatrix,5,attribute_list);
-		rootNode = generateDecisionTree(tMatrix, attribute_list, new ID3AttributeSelectionMethod(false));
-		System.out.println("DeepestLevel: "+deepestLevel+ " number of nodes: "+nodeCount);
-		SaveTree.saveTree(rootNode);
+		 */
 		//Test accuracy on test set
-		attribute_list = Constants.getAllLabels();
+		 ArrayList<LABEL> attribute_list2 = Constants.getAllLabels();
 		String[][] testMatrix = Constants.testMatrix;	
-		testMatrix = addStrategyClass(testMatrix,attribute_list);
-		printMatrix(testMatrix,5,attribute_list);
-		for (String string : getLabelAttributeValues(testMatrix, LABEL.DirectionChosen, attribute_list)) {
+		testMatrix = addStrategyClass(testMatrix,attribute_list2);
+		printMatrix(testMatrix,5,attribute_list2);
+		for (String string : getLabelAttributeValues(testMatrix, LABEL.DirectionChosen, attribute_list2)) {
 			System.out.println("LABEL.DirectionChosen: "+string);
 		}
-		testMatrix = removeLabelData(testMatrix, LABEL.currentLevel, attribute_list);
-		attribute_list.remove(LABEL.currentLevel);
-		testMatrix = removeLabelData(testMatrix, LABEL.mazeIndex,attribute_list);
-		attribute_list.remove(LABEL.mazeIndex);
-		testMatrix = removeLabelData(testMatrix, LABEL.pacmanPosition,attribute_list);
-		attribute_list.remove(LABEL.pacmanPosition);
-		testMatrix = removeLabelData(testMatrix, LABEL.pacmanLivesLeft,attribute_list);
-		attribute_list.remove(LABEL.pacmanLivesLeft);
-		testMatrix = removeLabelData(testMatrix, LABEL.currentScore,attribute_list);
-		attribute_list.remove(LABEL.currentScore);
-		testMatrix = removeLabelData(testMatrix, LABEL.numOfPillsLeft,attribute_list);
-		attribute_list.remove(LABEL.numOfPillsLeft);
-		testMatrix = removeLabelData(testMatrix, LABEL.numOfPowerPillsLeft,attribute_list);
-		attribute_list.remove(LABEL.numOfPowerPillsLeft);
-		testMatrix = removeLabelData(testMatrix, LABEL.totalGameTime,attribute_list);
-		attribute_list.remove(LABEL.totalGameTime);
-		testMatrix = removeLabelData(testMatrix, LABEL.currentLevelTime,attribute_list);
-		attribute_list.remove(LABEL.currentLevelTime);
-		testMatrix = removeLabelData(testMatrix, LABEL.inkyDir,attribute_list);
-		attribute_list.remove(LABEL.inkyDir);
-		testMatrix = removeLabelData(testMatrix, LABEL.blinkyDir,attribute_list);
-		attribute_list.remove(LABEL.blinkyDir);
-		testMatrix = removeLabelData(testMatrix, LABEL.pinkyDir,attribute_list);
-		attribute_list.remove(LABEL.pinkyDir);
-		testMatrix = removeLabelData(testMatrix, LABEL.sueDir,attribute_list);
-		attribute_list.remove(LABEL.sueDir);
-		testMatrix = removeLabelData(testMatrix, LABEL.numberOfNodesInLevel,attribute_list);
-		attribute_list.remove(LABEL.numberOfNodesInLevel);
-		testMatrix = removeLabelData(testMatrix, LABEL.numberOfTotalPillsInLevel,attribute_list);
-		attribute_list.remove(LABEL.numberOfTotalPillsInLevel);
-		testMatrix = removeLabelData(testMatrix, LABEL.numberOfTotalPowerPillsInLevel,attribute_list);
-		attribute_list.remove(LABEL.numberOfTotalPowerPillsInLevel);
+		testMatrix = removeLabelData(testMatrix, LABEL.currentLevel, attribute_list2);
+		attribute_list2.remove(LABEL.currentLevel);
+		testMatrix = removeLabelData(testMatrix, LABEL.mazeIndex,attribute_list2);
+		attribute_list2.remove(LABEL.mazeIndex);
+		testMatrix = removeLabelData(testMatrix, LABEL.pacmanPosition,attribute_list2);
+		attribute_list2.remove(LABEL.pacmanPosition);
+		testMatrix = removeLabelData(testMatrix, LABEL.pacmanLivesLeft,attribute_list2);
+		attribute_list2.remove(LABEL.pacmanLivesLeft);
+		testMatrix = removeLabelData(testMatrix, LABEL.currentScore,attribute_list2);
+		attribute_list2.remove(LABEL.currentScore);
+		testMatrix = removeLabelData(testMatrix, LABEL.numOfPillsLeft,attribute_list2);
+		attribute_list2.remove(LABEL.numOfPillsLeft);
+		testMatrix = removeLabelData(testMatrix, LABEL.numOfPowerPillsLeft,attribute_list2);
+		attribute_list2.remove(LABEL.numOfPowerPillsLeft);
+		testMatrix = removeLabelData(testMatrix, LABEL.totalGameTime,attribute_list2);
+		attribute_list2.remove(LABEL.totalGameTime);
+		testMatrix = removeLabelData(testMatrix, LABEL.currentLevelTime,attribute_list2);
+		attribute_list2.remove(LABEL.currentLevelTime);
+		testMatrix = removeLabelData(testMatrix, LABEL.inkyDir,attribute_list2);
+		attribute_list2.remove(LABEL.inkyDir);
+		testMatrix = removeLabelData(testMatrix, LABEL.blinkyDir,attribute_list2);
+		attribute_list2.remove(LABEL.blinkyDir);
+		testMatrix = removeLabelData(testMatrix, LABEL.pinkyDir,attribute_list2);
+		attribute_list2.remove(LABEL.pinkyDir);
+		testMatrix = removeLabelData(testMatrix, LABEL.sueDir,attribute_list2);
+		attribute_list2.remove(LABEL.sueDir);
+		testMatrix = removeLabelData(testMatrix, LABEL.numberOfNodesInLevel,attribute_list2);
+		attribute_list2.remove(LABEL.numberOfNodesInLevel);
+		testMatrix = removeLabelData(testMatrix, LABEL.numberOfTotalPillsInLevel,attribute_list2);
+		attribute_list2.remove(LABEL.numberOfTotalPillsInLevel);
+		testMatrix = removeLabelData(testMatrix, LABEL.numberOfTotalPowerPillsInLevel,attribute_list2);
+		attribute_list2.remove(LABEL.numberOfTotalPowerPillsInLevel);
 		System.out.println("Attribute gain for test set containing "+ testMatrix[0].length+" rows." );
-		new ID3AttributeSelectionMethod(true).method(testMatrix, attribute_list);
-		 printMatrix(testMatrix,5,attribute_list);
-		System.out.println("Accuracy: "+new CalculateAccuracy(SaveTree.loadTree(),testMatrix,attribute_list).getAccuracy());
+		new ID3AttributeSelectionMethod(true).method(testMatrix, attribute_list2);
+		 printMatrix(testMatrix,5,attribute_list2);
+		 //
+		 /*
+		 //exportData(tMatrix,attribute_list);
+		 String[][] trainingMatrix = getRandomOfRows(100,tMatrix );
+		 printMatrix(trainingMatrix,20,attribute_list);
+		 String[][] selectedTestMatrix = getRandomOfRows(10,testMatrix );
+		 printMatrix(trainingMatrix,20,attribute_list);
+		 rootNode = generateDecisionTree(trainingMatrix, attribute_list, new ID3AttributeSelectionMethod(false));
+			System.out.println("DeepestLevel: "+deepestLevel+ " number of nodes: "+nodeCount);
+			SaveTree.saveTree(rootNode);
+			System.out.println("Accuracy: "+new CalculateAccuracy(SaveTree.loadTree(),selectedTestMatrix,attribute_list2).getAccuracy());
+			createAndClearFile();
+			for (int i = 10;i<tMatrix[0].length/10;i=i+20){
+				trainingMatrix = getRandomOfRows(i,tMatrix);
+				rootNode = generateDecisionTree(trainingMatrix, attribute_list, new ID3AttributeSelectionMethod(false));
+				System.out.println("DeepestLevel: "+deepestLevel+ " number of nodes: "+nodeCount);
+				SaveTree.saveTree(rootNode);
+				int testRows = i*2/10;
+				if (testRows>testMatrix[0].length){
+					testRows = testMatrix[0].length;
+				}
+				selectedTestMatrix = getRandomOfRows(testRows,testMatrix );
+				double accuracy = new CalculateAccuracy(SaveTree.loadTree(),selectedTestMatrix,attribute_list2).getAccuracy();
+				System.out.println("Accuracy: "+accuracy);
+				printResultToFile(i,accuracy,nodeCount,deepestLevel);
+			}*/
+			
+		exportData(tMatrix,attribute_list,"trainingData.txt");
+		exportData(testMatrix,attribute_list,"testData.txt");
 	}
 	
+	
+	private void exportData(String[][] input,ArrayList<LABEL> attribute_list,String filename){
+		String path = "../DecisionTreeTest/"+filename;
+//		try {
+//			Files.deleteIfExists(Paths.get(path));
+//		}catch (IOException e) {
+//		    System.out.println(e.toString());
+//		}
+//		try {
+//			Files.createFile(Paths.get(path));
+//		}catch (IOException e) {
+//		    System.out.println(e.toString());
+//		}
+		File f = new File(path);
+		if(f.exists() && !f.isDirectory()) { 
+		    f.delete();
+		}
+		Writer output;
+		try {
+			output = new BufferedWriter(new FileWriter(path,true));
+			for (int i=0; i<input[0].length; i++ ){
+				String s = "";
+				for (int j = 0; j<input.length;j++){
+					String k = String.valueOf(convertToNumber(input[j][i],attribute_list.get(j)));
+					s=s+k;
+					if(j<input.length-1){
+						s=s+",";
+					}
+				}
+				s=s+"\n";
+				//try {
+					output.append(s);
+				   // Files.write(Paths.get(path), s.getBytes(), StandardOpenOption.APPEND);
+				//}catch (IOException e) {
+				 //   System.out.println(e.toString());
+				//}
+			}
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private int convertToNumber(String value, LABEL label) {
+		int result = -1;
+		if (label.equals(LABEL.inkyDist)||label.equals(LABEL.pinkyDist)||label.equals(LABEL.blinkyDist)||label.equals(LABEL.sueDist)){
+			switch (value) {
+			case "VERY_LOW":
+				result=1;
+				break;
+			case "LOW":
+				result=2;
+				break;
+			case "MEDIUM":
+				result=3;
+				break;
+			case "HIGH":
+				result=4;
+				break;
+			case "VERY_HIGH":
+				result=5;
+				break;
+			case "NONE":
+				result=0;
+				break;
+			default:
+				result=-1;
+				break;
+			}
+		}
+		if (label.equals(LABEL.isInkyEdible)||label.equals(LABEL.isPinkyEdible)||label.equals(LABEL.isBlinkyEdible)||label.equals(LABEL.isSueEdible)){
+			switch (value) {
+			case "false":
+				result=0;
+				break;
+			case "true":
+				result=1;
+				break;
+			default:
+				result=-1;
+				break;
+			}
+		}
+		if (label.equals(LABEL.DirectionChosen)){
+			switch (value) {
+			case "ATTACK":
+				result = 1;
+				break;
+			case "EAT_PILLS":
+				result = 2;
+				break;	
+			case "EAT_POWER_PILLS":
+				result = 3;		
+				break;	
+			case "RUN":
+				result = 4;
+				break;	
+			case "NOSTRATEGY":
+				result = 5;
+				break;	
+			default:
+				result=-1;
+				break;
+			}
+		}
+		return result;
+	}
+
+
+	private void createAndClearFile() {
+		try {
+			Files.createFile(Paths.get("myData/katjong.txt"));
+		}catch (IOException e) {
+		    System.out.println(e.toString());
+		}
+	} 
+	private void printResultToFile(int numberNodes, double accuracy, int nodeCount, int deepestLevel) {
+		String s =""+numberNodes+","+accuracy+","+nodeCount+","+deepestLevel+"\n";
+		try {
+		    Files.write(Paths.get("myData/katjong.txt"), s.getBytes(), StandardOpenOption.APPEND);
+		}catch (IOException e) {
+		    System.out.println(e.toString());
+		}
+	}
+
+
+	private String[][] getRandomOfRows(int rows, String[][] d){
+		Random rnd=new Random();
+		ArrayList<Integer> selected = new ArrayList<Integer>();
+		int selectedrow = 0;
+		String[][] result = new String[d.length][rows];
+		while (selectedrow<rows){
+			int rndInt = rnd.nextInt(d[0].length);
+			if(rows<(d[0].length*3/4)){
+				while (selected.contains(rndInt)){
+					rndInt = rnd.nextInt(d[0].length); //Danger
+				}
+				selected.add(rndInt);
+			}
+			for(int i=0; i<d.length;i++){
+				result[i][selectedrow] = d[i][rndInt];
+			}
+			selectedrow++;
+		}
+		return result;
+	}
+		
+		
 
 
 	private Node generateDecisionTree(String[][] d, ArrayList<LABEL> attribute_list, AttributeSelectionMethod att ){
@@ -343,7 +533,6 @@ public class TrainModel {
 					d2[j][i]= d[j][i];
 					tuple[j]=d[j][i];
 				}
-				//if all ghosts are far away HIGH or VERY_HIGH and not edible return eat pills
 				if (ghostsFarAway(tuple, attribute_list)){
 					d2[0][i] = STRATEGY.EAT_PILLS.name();
 				}else if(allGhostsedible(tuple, attribute_list)){ //if GOASTS is edible ATTACK
@@ -353,10 +542,6 @@ public class TrainModel {
 				}else{
 					d2[0][i] = STRATEGY.NOSTRATEGY.name();
 				}
-				
-				
-				//if some ghosts is MEDIUN eat POWERPILL RUN		
-				//if GOASTS is edible ATTACK
 			}
 	   return d2;
    }
@@ -476,7 +661,11 @@ private boolean ghostsFarAway(String[] tuple, ArrayList<LABEL> attribute_list){
 			//System.out.println("rowsToPrint: "+rowsToPrint);
 			//Print headlines
 			for (int i= 0; i<attribute_list.size();i++){
-				System.out.print(attribute_list.get(i).toString()+"|");
+				String s = attribute_list.get(i).toString();
+				if (s.equals("DirectionChosen")){
+					s="StrategyClass";
+				}
+				System.out.print(s+"|");
 			}
 			System.out.println();
 			for (int i=0; i<rowsToPrint; i++ ){
