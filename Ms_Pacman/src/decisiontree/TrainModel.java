@@ -26,11 +26,6 @@ import decisiontree.Constants.LABEL;
 import decisiontree.Constants.STRATEGY;
 import pacman.game.Constants.MOVE;
 
-//Ask Jose why not all static
-//Nothing is said about were to store C class The leaf nodes
-//And nothing about were to store the end nodes from C which are different form the other nodes  (they are attributes).
-//Remove the class from training data?
-
 public class TrainModel {
     public static Node rootNode; 
     private int currentLevel;
@@ -88,7 +83,7 @@ public class TrainModel {
 		tMatrix = removeLabelData(tMatrix, LABEL.numberOfTotalPowerPillsInLevel,attribute_list);
 		attribute_list.remove(LABEL.numberOfTotalPowerPillsInLevel);
 		//remove all rows that are distant....
-		printMatrix(tMatrix,5,attribute_list);
+		printMatrix(tMatrix,50,attribute_list);
 		/*
 		for (String string : getLabelAttributeValues(tMatrix, LABEL.DirectionChosen, attribute_list)) {
 			System.out.println("LABEL.DirectionChosen: "+string);
@@ -322,7 +317,6 @@ public class TrainModel {
 
 	private Node generateDecisionTree(String[][] d, ArrayList<LABEL> attribute_list, AttributeSelectionMethod att ){
 //		1: Create node N.
-		
 		Node n = new Node();
 		currentLevel++;
 		nodeCount++;
