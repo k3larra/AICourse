@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce92b860-3999-4ab2-bba9-8e3b81589a49" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/MultinominalLogReg.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/NN.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/NNRawNumbers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/NaiveBayes.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/NearestNeighbor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/SVM.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/TestAlgorithm.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/classification.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../DecisionTreeTest/tense.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DecisionTreeTest/treework.py" afterPath="$PROJECT_DIR$/../DecisionTreeTest/treework.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ms_Pacman/src/decisiontree/Constants.java" afterPath="$PROJECT_DIR$/../Ms_Pacman/src/decisiontree/Constants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ms_Pacman/src/decisiontree/TrainModel.java" afterPath="$PROJECT_DIR$/../Ms_Pacman/src/decisiontree/TrainModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Ms_Pacman/src/pacman/BuildAndSaveDecisionTree.java" afterPath="$PROJECT_DIR$/../Ms_Pacman/src/pacman/BuildAndSaveDecisionTree.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,62 +26,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.8139918">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file leaf-file-name="treework.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/treework.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="12" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CountIt.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/CountIt.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="321">
-                  <caret line="19" column="10" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="10" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="katjong.txt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/katjong.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1751">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="Knappsack.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Knappsack.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="511">
-                  <caret line="405" column="4" lean-forward="false" selection-start-line="405" selection-start-column="4" selection-end-line="405" selection-end-column="4" />
-                  <folding>
-                    <element signature="e#0#38#0" expanded="true" />
-                    <element signature="e#5368#5465#0" expanded="false" />
-                    <element signature="e#5947#6736#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="NNRawNumbers.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/NNRawNumbers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="18" column="101" lean-forward="false" selection-start-line="18" selection-start-column="101" selection-end-line="18" selection-end-column="101" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -88,7 +56,12 @@
       <find>460</find>
       <find>itemWeights</find>
       <find>getIndexForMostValuableItemNotPacked</find>
+      <find>classTestData</find>
     </findStrings>
+    <replaceStrings>
+      <replace>trainingTuples</replace>
+      <replace>classTrainingData</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -105,15 +78,25 @@
         <option value="$PROJECT_DIR$/Knappsack.py" />
         <option value="$PROJECT_DIR$/../DecisionTreeTest/CountIt.py" />
         <option value="$PROJECT_DIR$/../DecisionTreeTest/alldata.txt" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/tense.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/MultinominalLogReg.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/classification.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/TestAlgorithm.py" />
         <option value="$PROJECT_DIR$/../DecisionTreeTest/treework.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/NaiveBayes.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/NearestNeighbor.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/SVM.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/NN.py" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/rawTestNumbers.txt" />
+        <option value="$PROJECT_DIR$/../DecisionTreeTest/NNRawNumbers.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-908" />
-    <option name="y" value="-1050" />
+    <option name="x" value="1630" />
+    <option name="y" value="-1368" />
     <option name="width" value="1546" />
-    <option name="height" value="963" />
+    <option name="height" value="830" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -150,8 +133,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -175,12 +158,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../DecisionTreeTest" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\k3lara\Documents\GitHub\AICourse\DecisionTreeTest" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\k3lara\Documents\GitHub\AICourse\DecisionTreeTest" />
       <recent name="C:\Users\k3lara\Documents\GitHub\AICourse\Knappsack" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\k3lara\Documents\GitHub\AICourse\DecisionTreeTest" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -195,8 +178,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.treework">
-    <configuration name="CountIt" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.NNRawNumbers">
+    <configuration name="NN" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -208,46 +191,12 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="DecisionTreeTest" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/CountIt.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/NN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="Item" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Knappsack" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Item.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="Knappsack" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Knappsack" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Knappsack.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="treework" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="NNRawNumbers" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -259,23 +208,76 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="DecisionTreeTest" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/treework.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/NNRawNumbers.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Python.Knappsack" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Item" />
-      <item index="2" class="java.lang.String" itemvalue="Python.CountIt" />
-      <item index="3" class="java.lang.String" itemvalue="Python.treework" />
+    <configuration name="NaiveBayes" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../DecisionTreeTest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DecisionTreeTest" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/NaiveBayes.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="NearestNeighbor" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../DecisionTreeTest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DecisionTreeTest" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/NearestNeighbor.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="SVM" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../DecisionTreeTest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="DecisionTreeTest" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../DecisionTreeTest/SVM.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.NaiveBayes" />
+      <item index="1" class="java.lang.String" itemvalue="Python.NearestNeighbor" />
+      <item index="2" class="java.lang.String" itemvalue="Python.SVM" />
+      <item index="3" class="java.lang.String" itemvalue="Python.NN" />
+      <item index="4" class="java.lang.String" itemvalue="Python.NNRawNumbers" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.treework" />
-        <item index="1" class="java.lang.String" itemvalue="Python.CountIt" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Knappsack" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Item" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.NNRawNumbers" />
+        <item index="1" class="java.lang.String" itemvalue="Python.NN" />
+        <item index="2" class="java.lang.String" itemvalue="Python.SVM" />
+        <item index="3" class="java.lang.String" itemvalue="Python.NearestNeighbor" />
+        <item index="4" class="java.lang.String" itemvalue="Python.NaiveBayes" />
       </list>
     </recent_temporary>
   </component>
@@ -325,22 +327,21 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-908" y="-1050" width="1546" height="963" extended-state="0" />
-    <editor active="true" />
+    <frame x="1630" y="-1368" width="1546" height="830" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14631197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32825485" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32769045" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31556195" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19240838" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28625" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3763089" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28603104" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48375" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3039419" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.012434555" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -369,134 +370,15 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="44" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Knappsack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#5368#5465#0" expanded="false" />
-            <element signature="e#5947#6736#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pseudocode.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="42">
-            <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="34" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Neighborhood.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="651">
-            <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7119">
-          <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Knappsack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#5368#5465#0" expanded="false" />
-            <element signature="e#5947#6736#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pseudocode.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="42">
-            <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="34" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Neighborhood.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="651">
-            <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7119">
-          <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Knappsack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#5368#5465#0" expanded="false" />
-            <element signature="e#5947#6736#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pseudocode.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="42">
-            <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="34" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Neighborhood.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="651">
-            <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/fromnumeric.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7350">
           <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -505,7 +387,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#5368#5465#0" expanded="false" />
             <element signature="e#5947#6736#0" expanded="false" />
           </folding>
@@ -517,7 +399,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="315">
             <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -527,7 +408,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7119">
           <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -536,7 +416,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#5368#5465#0" expanded="false" />
             <element signature="e#5947#6736#0" expanded="false" />
           </folding>
@@ -548,7 +428,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="315">
             <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -558,7 +437,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7119">
           <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -567,7 +445,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -577,7 +454,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7350">
           <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -586,7 +462,7 @@
         <state relative-caret-position="3738">
           <caret line="183" column="25" lean-forward="false" selection-start-line="183" selection-start-column="25" selection-end-line="183" selection-end-column="25" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#5368#5465#0" expanded="false" />
             <element signature="e#5947#6736#0" expanded="false" />
           </folding>
@@ -597,7 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7119">
           <caret line="350" column="35" lean-forward="true" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -606,7 +481,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -617,7 +491,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#5368#5465#0" expanded="false" />
             <element signature="e#5947#6736#0" expanded="false" />
           </folding>
@@ -632,7 +506,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
             <element signature="e#5368#5465#0" expanded="false" />
             <element signature="e#5947#6736#0" expanded="false" />
           </folding>
@@ -649,7 +523,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7119">
           <caret line="350" column="35" lean-forward="false" selection-start-line="350" selection-start-column="35" selection-end-line="350" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -658,26 +531,23 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="651">
             <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pseudocode.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="42">
             <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="34" />
-            <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -685,7 +555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -693,7 +562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="4" column="23" lean-forward="true" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -701,6 +569,97 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/alldata.txt" />
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/iris">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Knappsack.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="405" column="4" lean-forward="false" selection-start-line="405" selection-start-column="4" selection-end-line="405" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+            <element signature="e#5368#5465#0" expanded="false" />
+            <element signature="e#5947#6736#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/katjong.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/trainingData.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="25" column="9" lean-forward="true" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/CountIt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="12" lean-forward="true" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/testData.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="375" column="17" lean-forward="true" selection-start-line="375" selection-start-column="10" selection-end-line="375" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/treework.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/TestAlgorithm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="35" column="36" lean-forward="true" selection-start-line="35" selection-start-column="36" selection-end-line="35" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/tense.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -713,48 +672,92 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/alldata.txt">
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/MultinominalLogReg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8505">
-          <caret line="405" column="9" lean-forward="true" selection-start-line="405" selection-start-column="9" selection-end-line="405" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Knappsack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="405" column="4" lean-forward="false" selection-start-line="405" selection-start-column="4" selection-end-line="405" selection-end-column="4" />
+        <state relative-caret-position="-618">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#5368#5465#0" expanded="false" />
-            <element signature="e#5947#6736#0" expanded="false" />
+            <element signature="e#97#115#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/CountIt.py">
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/NaiveBayes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="19" column="10" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="10" />
+        <state relative-caret-position="462">
+          <caret line="22" column="38" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="38" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/katjong.txt">
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/SVM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1751">
+        <state relative-caret-position="210">
+          <caret line="10" column="29" lean-forward="true" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/NearestNeighbor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/testDataRaw.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/treework.py">
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/rawNumbers.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="54" column="48" lean-forward="true" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/NN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="48" lean-forward="false" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/rawTrainingNumbers.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="12" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/rawTestNumbers.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102757">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../DecisionTreeTest/NNRawNumbers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="18" column="101" lean-forward="false" selection-start-line="18" selection-start-column="101" selection-end-line="18" selection-end-column="101" />
           <folding />
         </state>
       </provider>

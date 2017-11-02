@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn import tree
+import graphviz
 # X = [[0, 0], [1, 1]]
 # Y = [0, 1]
 # clf = tree.DecisionTreeClassifier()
@@ -20,10 +21,13 @@ i=0
 
 accuracyResult = np.empty(shape=[0, 3])
 
-#for x in range(10, 2000, 100):
+
+#
+#for x in range(10, 4000, 100):
 for x in range(10,trainingTuples.shape[0],100):
     idx = np.random.randint(trainingTuples.shape[0],size=x)
-    clf = tree.DecisionTreeClassifier()
+    clf = tree.DecisionTreeClassifier(max_depth=20,min_samples_leaf=5)
+    #clf = tree.DecisionTreeRegressor #for y floating point doesnt work here
     clf = clf.fit(trainingTuples[idx,:], classTrainingData[idx])
     correct = 0;
     for row in testData:

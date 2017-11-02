@@ -56,14 +56,14 @@ public class Executor
 		int numTrials=10;
 //		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
 		 
-		boolean visual=true;
+		/*boolean visual=true;
 		//run a game in synchronous mode: game waits until controllers respond.
 		int delay=5;
 		//exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
 		Node n = SaveTree.loadTree();
 		if (n != null){
 			exec.runGame(new DecisionTreePacMan(n),new StarterGhosts(),visual,5);
-		} 
+		} */
 	
 
 		///*
@@ -90,8 +90,8 @@ public class Executor
 
 		
 		//LH run game for data collection
-		//boolean visual=true;
-		//exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		boolean visual=true;
+		exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
 		
 	}
 	

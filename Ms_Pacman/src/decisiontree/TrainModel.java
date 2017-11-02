@@ -527,14 +527,14 @@ public class TrainModel {
 					d2[j][i]= d[j][i];
 					tuple[j]=d[j][i];
 				}
-				if (ghostsFarAway(tuple, attribute_list)){
-					d2[0][i] = STRATEGY.EAT_PILLS.name();
+				if (ghostsFarAway(tuple, attribute_list)){ 
+					d2[0][i] = STRATEGY.EAT_PILLS.name(); //0,4 or 5 on all distances gives 2 
 				}else if(allGhostsedible(tuple, attribute_list)){ //if GOASTS is edible ATTACK
-					d2[0][i] = STRATEGY.ATTACK.name();
+					d2[0][i] = STRATEGY.ATTACK.name(); // One on all editable gives 1
 				}else if(anyGhostClose(tuple, attribute_list)){//if some ghosts is VERY_LOW and not edible RUN	
-					d2[0][i] = STRATEGY.RUN.name();
+					d2[0][i] = STRATEGY.RUN.name(); // 1 or 2 on distances gives 3
 				}else{
-					d2[0][i] = STRATEGY.NOSTRATEGY.name();
+					d2[0][i] = STRATEGY.NOSTRATEGY.name(); //4
 				}
 			}
 	   return d2;
@@ -552,7 +552,7 @@ public class TrainModel {
 	   boolean blinkyClose = false;
 	   boolean pinkyClose = false;
 	   boolean sueClose = false;
-	   if(tuple[inkyColumn].equals("VERY_LOW")||tuple[inkyColumn].equals("LOW")){
+	   if(tuple[inkyColumn].equals("VERY_LOW")||tuple[inkyColumn].equals("LOW")){  //1 or 2
 		   inkyClose = true;
 	   }
 	   if(tuple[blinkyColumn].equals("VERY_LOW")||tuple[blinkyColumn].equals("LOW")){
