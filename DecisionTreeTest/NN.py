@@ -14,7 +14,7 @@ testTuples = testData[:,1:]
 n_neighbors = 50
 accuracyResult = np.empty(shape=[0, 2])
 
-for x in range(18000,trainingTuplesX.shape[0],1000):
+for x in range(1,trainingTuplesX.shape[0],2000):
     idx = np.random.randint(trainingTuplesX.shape[0], size=x)
     clf = MLPClassifier(solver='adam', activation = "relu", alpha=1e-5, hidden_layer_sizes=(24,50), random_state=1)
     clf.fit(trainingTuplesX[idx,:], classTrainingDataY[idx])
