@@ -48,7 +48,11 @@ public class ID3AttributeSelectionMethod extends AttributeSelectionMethod {
 		}
 		if(outputInfo){
 			for(int j=0; j<attribute_list.size(); j++){
-				System.out.println("Attribute: "+attribute_list.get(j).name()+ " has gain: "+info_req_for_attribute[j]);
+				String s = attribute_list.get(j).name();
+				if (s.equals("DirectionChosen")){
+					s="StrategyClass";
+				}
+				System.out.println("Attribute: "+s+ " has gain: "+info_req_for_attribute[j]);
 			}
 		}
 		int indexForMAx= getIndexForMaxValueExcludePositionZero(info_req_for_attribute);
@@ -66,26 +70,25 @@ public class ID3AttributeSelectionMethod extends AttributeSelectionMethod {
 		for (int i = 0; i<D[0].length;i++) {
 			s = D[column][i];
 			if (s.equals(value)){
-
 				total[5]++;
 				switch (D[0][i]) {
-					case "UP":
+					case "ATTACK":
 						total[0]++;
 						break;
-					case "DOWN":
+					case "EAT_PILLS":
 						total[1]++;
 						break;
-					case "LEFT":
+					case "EAT_POWER_PILLS":
 						total[2]++;
 						break;
-					case "RIGHT":
+					case "RUN":
 						total[3]++;
 						break;
-					case "NEUTRAL":
+					case "NOSTRATEGY":
 						total[4]++;
 						break;
 					default:
-						System.out.println("OUUUUP");
+						System.out.println("OUUUUPs NumberAttributeValues");
 						break;
 				}
 			}
@@ -99,23 +102,23 @@ public class ID3AttributeSelectionMethod extends AttributeSelectionMethod {
 		//numberups
 		for (String s : D[0]) {
 			switch (s) {
-			case "UP":
+			case "ATTACK":
 				info_D[0]++;
 				break;
-			case "DOWN":
+			case "EAT_PILLS":
 				info_D[1]++;
 				break;
-			case "LEFT":
+			case "EAT_POWER_PILLS":
 				info_D[2]++;
 				break;
-			case "RIGHT":
+			case "RUN":
 				info_D[3]++;
 				break;
-			case "NEUTRAL":
+			case "NOSTRATEGY":
 				info_D[4]++;
 				break;
 			default:
-				System.out.println("OUUUUP");
+				System.out.println("OUUUUPSINfoGain: "+s);
 				break;
 			}
 		}

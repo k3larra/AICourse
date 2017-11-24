@@ -1,0 +1,1 @@
+DirectionsChosen,isBlinkyEdible,isInkyEdible,isPinkyEdible,isSueEdible,blinkyDist,inkyDist,pinkyDist,sueDist

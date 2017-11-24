@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../DecisionTreeTest/.idea/DecisionTreeTest.iml" filepath="$PROJECT_DIR$/../DecisionTreeTest/.idea/DecisionTreeTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Knappsack.iml" filepath="$PROJECT_DIR$/.idea/Knappsack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../IoTbackend/visualisation/.idea/visualisation.iml" filepath="$PROJECT_DIR$/../../IoTbackend/visualisation/.idea/visualisation.iml" />
     </modules>
   </component>
 </project>

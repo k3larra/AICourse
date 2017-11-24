@@ -25,10 +25,11 @@ public class testID3 {
 		attribute_list.remove(LABEL.numberOfTotalPowerPillsInLevel);
 		System.out.println("attribute_list.size(): "+attribute_list.size());*/
 		ID3AttributeSelectionMethod id3 = new ID3AttributeSelectionMethod(true);
-		id3.method(Constants.tupleMatrix, attribute_list);
-		for (LABEL label : id3.getAttributesWithZeroGain()) {
-			System.out.println(label.toString());
-		}
+		//Not working anymore
+//		id3.method(Constants.tupleMatrix, attribute_list);
+//		for (LABEL label : id3.getAttributesWithZeroGain()) {
+//			System.out.println(label.toString());
+//		}
 	}
 
 }

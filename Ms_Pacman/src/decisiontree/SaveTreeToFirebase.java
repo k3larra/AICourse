@@ -41,7 +41,7 @@ public class SaveTreeToFirebase {
 		        }
 		        database = FirebaseDatabase.getInstance().getReference();
 		        Node n = SaveTree.loadTree();
-		        database.child("DecisionTree2").child(n.getLabelData().toString()).setValue(n,new DatabaseReference.CompletionListener() {
+		        database.child("DecisionTree3").child(n.getLabelData().toString()).setValue(n,new DatabaseReference.CompletionListener() {
 					@Override
 					public void onComplete(DatabaseError error, DatabaseReference ref) {
 						// TODO Auto-generated method stub

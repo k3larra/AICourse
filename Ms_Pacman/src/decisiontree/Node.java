@@ -9,6 +9,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import dataRecording.DataTuple;
 import decisiontree.Constants.LABEL;
 import decisiontree.Constants.LEAF;
+import decisiontree.Constants.STRATEGY;
 import pacman.game.Constants.MOVE;
 
 @IgnoreExtraProperties
@@ -16,7 +17,8 @@ public class Node implements Serializable{
 	 private LABEL labelData;
 	 private String attrValue;
 	 private int nodelevel;
-	 private MOVE classData;
+	 //private MOVE classData;
+	 private STRATEGY classData;
 	 private Collection<Node> myChildren = new ArrayList<Node>();
 	 
 	 public Node() {
@@ -30,7 +32,7 @@ public class Node implements Serializable{
 		 }
 	 }
 	 
-	 public MOVE getClassData(){
+	 public STRATEGY getClassData(){
 		 return classData;
 	 }
 	 
@@ -46,7 +48,7 @@ public class Node implements Serializable{
 		 myChildren = children;
 	 }
 	 
-	 public void setAsLeafNode(MOVE leaf){
+	 public void setAsLeafNode(STRATEGY leaf){
 		 classData = leaf;
 	 }
 

@@ -56,16 +56,15 @@ public class Executor
 		int numTrials=10;
 //		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
 		 
-/*		boolean visual=true;
+		/*boolean visual=true;
 		//run a game in synchronous mode: game waits until controllers respond.
 		int delay=5;
 		//exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
 		Node n = SaveTree.loadTree();
 		if (n != null){
-			n.printAllLowerNodes();
 			exec.runGame(new DecisionTreePacMan(n),new StarterGhosts(),visual,5);
-		} 
-		*/
+		} */
+	
 
 		///*
 		//run the game in asynchronous mode.
@@ -77,9 +76,9 @@ public class Executor
 		
 		//run the game in asynchronous mode but advance as soon as both controllers are ready  - this is the mode of the competition.
 		//time limit of DELAY ms still applies.
-		boolean visual=true;
+		/*boolean visual=true;
 		boolean fixedTime=false;
-		exec.runGameTimedSpeedOptimised(new RandomPacMan(),new RandomGhosts(),fixedTime,visual);
+		exec.runGameTimedSpeedOptimised(new RandomPacMan(),new RandomGhosts(),fixedTime,visual);*/
 		
 		
 
@@ -91,8 +90,8 @@ public class Executor
 
 		
 		//LH run game for data collection
-		//boolean visual=true;
-		//exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
+		boolean visual=true;
+		exec.runGameTimed(new DataCollectorController(new KeyBoardInput()),new StarterGhosts(),visual);
 		
 	}
 	
