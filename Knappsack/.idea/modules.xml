@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../DecisionTreeTest/.idea/DecisionTreeTest.iml" filepath="$PROJECT_DIR$/../DecisionTreeTest/.idea/DecisionTreeTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Knappsack.iml" filepath="$PROJECT_DIR$/.idea/Knappsack.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/cloudml-samples-master/cloudml-samples-master/census/estimator/.idea/estimator.iml" filepath="$USER_HOME$/Downloads/cloudml-samples-master/cloudml-samples-master/census/estimator/.idea/estimator.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../IoTbackend/visualisation/.idea/visualisation.iml" filepath="$PROJECT_DIR$/../../IoTbackend/visualisation/.idea/visualisation.iml" />
     </modules>
   </component>
