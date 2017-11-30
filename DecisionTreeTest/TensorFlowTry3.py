@@ -3,7 +3,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-from sklearn.ensemble import forest
+#from sklearn.ensemble import forest
 from tensorflow import feature_column as fc
 import matplotlib.pyplot as plt
 import numpy as np

@@ -74,7 +74,15 @@ def query_again():
     # Waits for the query to finish
     iterator = query_job.result(timeout=TIMEOUT)
     for row in iterator:
-        print("{}: {}: {}".format(row.uid, row.startStation.encode('utf8'), row.detectedActivity.encode('utf8')))
+        print("{}: {}: {} : {} : {} : {} : {} : {}: {}".format(row.uid,
+                                  row.startStation.encode('utf8'),
+                                  row.detectedActivity.encode('utf8'),
+                                  row.locationAccuracyINT2,
+                                  row.longitudeFloat,
+                                  row.latitudeFloat,
+                                  row.detectedActivityConfidenceINT,
+                                  row.timeLocationDetectedINT,
+                                  row.detectedActivityINT2))
     #rows = list(iterator)
 
     #assert query_job.state == 'DONE'
@@ -103,6 +111,6 @@ def delete_specific():
         print("{}: {}".format(row.uid, row.startStation.encode('utf8')))
 
 query_again()
-##delete_all()  /Not possible over a Streaming buffer
+#delete_all()  #Not possible over a Streaming buffer
 #delete_specific()
-query_again()
+#query_again()

@@ -39,7 +39,6 @@ def input_fn_from_bigquery():
         detectedActivityConfidenceINT=tf.FixedLenFeature([1], tf.int64, default_value=5),
         timeLocationDetectedINT=tf.FixedLenFeature([1], tf.int64, default_value=6),
     )
-
     # Create the parse_examples list of features.
     label = dict(
         detectedActivityINT2=tf.FixedLenFeature([1], tf.int64, default_value=2)
@@ -73,18 +72,20 @@ estimator = tf.estimator.DNNClassifier(feature_columns=feature_columns,
                                        n_classes=5,
                                        model_dir="tmpen/try4_model")
 
-INPUT_TENSOR_NAME = 'inputs'
 def save_tf_learn_model(estimator, model_name, export_dir, feature_columns, ):
     #feature_spec = tf.contrib.layers.create_feature_spec_for_parsing(feature_columns)
-    feature_spec = {INPUT_TENSOR_NAME: tf.FixedLenFeature(dtype=tf.float32, shape=[5])}
-    serving_input_fn = tf.estimator.export.build_parsing_serving_input_fn(feature_spec)
+    feature_spec = {"locationAccuracyINT2": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5),
+                      "longitudeFloat": tf.FixedLenFeature(dtype=tf.float32, shape=[1], default_value=5),
+                      "latitudeFloat": tf.FixedLenFeature(dtype=tf.float32, shape=[1], default_value=5),
+                      "detectedActivityConfidenceINT": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5),
+                      "timeLocationDetectedINT": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5)}
+    serving_input_fn = tf.estimator.export.build_parsing_serving_input_receiver_fn(feature_spec)
     export_dir = os.path.join(export_dir, model_name)
     estimator.export_savedmodel(export_dir, serving_input_fn)
     print("Done exporting tf.learn model to " + export_dir + "!")
 
 
 save_tf_learn_model(estimator,"try2","tmpen/try4_model",feature_columns)
-
 
 # SESS_DICT = {}
 # def get_session(model_id):

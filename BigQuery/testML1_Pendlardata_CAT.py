@@ -36,7 +36,11 @@ def input_fn_from_bigquery():
         detectedActivityConfidenceINT=tf.FixedLenFeature([1], tf.int64, default_value=5),
         timeLocationDetectedINT=tf.FixedLenFeature([1], tf.int64, default_value=6),
     )
-
+    training_data2 = {"locationAccuracyINT2": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5),
+                    "longitudeFloat": tf.FixedLenFeature(dtype=tf.float32, shape=[1], default_value=5),
+                    "latitudeFloat": tf.FixedLenFeature(dtype=tf.float32, shape=[1], default_value=5),
+                    "detectedActivityConfidenceINT": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5),
+                    "timeLocationDetectedINT": tf.FixedLenFeature(dtype=tf.int64, shape=[1], default_value=5)}
     # Create the parse_examples list of features.
     label = dict(
         detectedActivityINT2=tf.FixedLenFeature([1], tf.int64, default_value=2)
@@ -53,7 +57,7 @@ def input_fn_from_bigquery():
 
     queue = tf.train.string_input_producer(reader.partitions())
     row_id, examples_serialized = reader.read_up_to(queue, 50)  ##OK then we get a vector
-    features = tf.parse_example(examples_serialized, features=training_data)
+    features = tf.parse_example(examples_serialized, features=training_data2)
     labels = tf.parse_example(examples_serialized, features=label)
     return features, labels["detectedActivityINT2"]
 
