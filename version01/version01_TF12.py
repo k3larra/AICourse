@@ -9,10 +9,9 @@ import tensorflow as tf
 
 # Data sets
 IRIS_TRAINING = "iris_training.csv"
-IRIS_TRAINING_URL = "http://download.tensorflow.org/data/iris_training.csv"
 
-ROOT_DIR = "tmp/iris_model"
-MODEL_NAME = "try9"
+ROOT_DIR = "ml_pendlaren"
+MODEL_NAME = "v01"
 
 def main():
   print(tf.VERSION)
