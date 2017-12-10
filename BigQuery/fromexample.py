@@ -14,6 +14,7 @@ IRIS_TRAINING_URL = "http://download.tensorflow.org/data/iris_training.csv"
 
 IRIS_TEST = "iris_training.csv"
 IRIS_TEST_URL = "http://download.tensorflow.org/data/iris_test.csv"
+ROOT_DIR = "tmp/iris_model"
 
 def main():
 
@@ -32,9 +33,9 @@ def main():
 
   # Build 3 layer DNN with 10, 20, 10 units respectively.
   estimator = tf.estimator.DNNClassifier(feature_columns=feature_columns,
-                                          hidden_units=[10, 20, 10],
-                                          n_classes=3,
-                                          model_dir="tmp/iris_model")
+                                         hidden_units=[10, 20, 10],
+                                         n_classes=3,
+                                         model_dir=ROOT_DIR)
   # Define the training inputs
   train_input_fn = tf.estimator.inputs.numpy_input_fn(
       x={"x": np.array(training_set.data)},
@@ -73,6 +74,18 @@ def main():
   print(
       "New Samples, Class Predictions:    {}\n"
       .format(predicted_classes))
+
+
+  def save_tf_learn_model(estimator, model_name, export_dir, feature_columns, ):
+      #feature_spec = create_feature_spec_for_parsing(feature_columns)
+      #feature_spec = tf.feature_column.make_parse_example_spec(feature_columns)
+      feature_spec = [{"x": tf.FixedLenFeature(dtype=tf.float32, shape=[4], default_value=[1.0,1.0,1.0,1.0])}]
+      serving_input_fn = tf.estimator.export.build_parsing_serving_input_receiver_fn(feature_spec)
+      export_dir = os.path.join(export_dir, model_name)
+      estimator.export_savedmodel(export_dir, serving_input_fn)
+      print("Done exporting tf.learn model to " + export_dir + "!")
+
+  save_tf_learn_model(estimator, "try1", ROOT_DIR, feature_columns)
 
 if __name__ == "__main__":
     main()
